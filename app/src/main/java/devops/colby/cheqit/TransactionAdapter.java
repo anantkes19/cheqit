@@ -65,9 +65,9 @@ public class TransactionAdapter extends BaseAdapter {
         TextView amountTextView = holder.amountTextView;
         TextView commentTextView = holder.commentTextView;
         Transaction transaction = (Transaction) getItem(position);
-
+        String amount = "$" + transaction.amount;
         nameTextView.setText(transaction.name);
-        amountTextView.setText(transaction.amount);
+        amountTextView.setText(amount);
         timeTextView.setText(transaction.time);
         commentTextView.setText(transaction.comment);
         //Picasso.with(mContext).load(recipe.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);

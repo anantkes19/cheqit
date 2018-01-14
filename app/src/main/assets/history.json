@@ -18,6 +18,15 @@
       "longitude": 4321,
       "comment": "bought food for 2 others too",
       "location" : "Sams club"
+    },
+    {
+      "name": "Mirakuya dinner",
+      "time" : "20 mins ago",
+      "amount": "100",
+      "latitude": 223,
+      "longitude": 4321,
+      "comment": "Sushiiii",
+      "location" : "Mirakuya"
     }
   ]
 }

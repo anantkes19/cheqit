@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+
 public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     final Context context = this;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -22,12 +24,10 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
                     return true;
-
                 case R.id.navigation_history:
                     Intent detailIntent = new Intent(context,HistoryActivity.class);
                     startActivity(detailIntent);
                     return true;
-
                 case R.id.navigation_settings:
                     mTextMessage.setText(R.string.title_settings);
                     return true;

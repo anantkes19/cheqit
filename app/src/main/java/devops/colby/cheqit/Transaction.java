@@ -20,7 +20,7 @@ public class Transaction {
     public String amount;
     //Something to store an image
     public String Location;
-    public Integer Latitude;
+    public Integer Latitude; //lat/long should be saved as array
     public Integer Longitude;
 
     public static ArrayList<Transaction> getTransactionsFromJSON(String filename, Context context){
@@ -28,7 +28,7 @@ public class Transaction {
 
         try {
             // Load data
-            String jsonString = loadJsonFromAsset("history.json", context);
+            String jsonString = loadJsonFromAsset(filename, context);
             JSONObject json = new JSONObject(jsonString);
             JSONArray recipes = json.getJSONArray("history");
 
