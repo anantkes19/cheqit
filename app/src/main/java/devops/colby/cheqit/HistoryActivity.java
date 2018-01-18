@@ -15,7 +15,7 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
 
         JsonHandler handler = (JsonHandler)getApplication();
-        ArrayList<Transaction> transactionList = handler.getTransactions("history.json", "history", this);
+        ArrayList<Transaction> transactionList = handler.getTransactions("history");
 
         pastTransactions = (ListView) findViewById(R.id.past_transactions_list_view);
 

@@ -20,12 +20,12 @@ public class JsonHandler extends Application {
 
 
 
-    public ArrayList<Transaction> getTransactions(String filename, String jsonName, Context context){
+    public ArrayList<Transaction> getTransactions(String filename){
         final ArrayList<Transaction> transactionList = new ArrayList<>();
 
         try {
             // Load data
-            String jsonString = loadJsonFromAsset(filename, context);
+            String jsonString = loadJson(filename);
 
             JSONArray transactions = new JSONArray(jsonString);
 
@@ -40,17 +40,15 @@ public class JsonHandler extends Application {
 
                 transactionList.add(transaction);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
         return transactionList;
     }
 
-    public void setTransaction(Transaction transaction, Context context) throws IOException {
-        ArrayList<Transaction> transactionList = getTransactions("history.json","history",context);
+    public void setTransaction(Transaction transaction) throws IOException {
+        ArrayList<Transaction> transactionList = getTransactions("history");
 
         transactionList.add(transaction);
         JSONArray jsonArray = new JSONArray();
@@ -68,9 +66,9 @@ public class JsonHandler extends Application {
 
     }
 
-    private String loadJsonFromAsset(String filename, Context context) throws IOException {
+    private String loadJson(String filename) throws IOException {
         String json;
-        FileInputStream fis = openFileInput("history");
+        FileInputStream fis = openFileInput(filename);
         int size = fis.available();
         byte[] buffer = new byte[size];
         fis.read(buffer);
