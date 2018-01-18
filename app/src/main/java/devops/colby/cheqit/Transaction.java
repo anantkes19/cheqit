@@ -1,13 +1,9 @@
 package devops.colby.cheqit;
 
-import android.content.Context;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.util.ArrayList;
 
 /**
  * Created by Austin Nantkes on 1/13/2018.
@@ -19,53 +15,28 @@ public class Transaction {
     public String comment;
     public String amount;
     //Something to store an image
-    public String Location;
-    public Integer Latitude; //lat/long should be saved as array
-    public Integer Longitude;
+    public String location;
+    public Integer latitude; //lat/long should be saved as array
+    public Integer longitude;
 
-    public static ArrayList<Transaction> getTransactionsFromJSON(String filename, Context context){
-        final ArrayList<Transaction> transactionList = new ArrayList<>();
-
-        try {
-            // Load data
-            String jsonString = loadJsonFromAsset(filename, context);
-            JSONObject json = new JSONObject(jsonString);
-            JSONArray recipes = json.getJSONArray("history");
-
-            // Get Recipe objects from data
-            for(int i = 0; i < recipes.length(); i++){
-                Transaction transaction = new Transaction();
-
-                transaction.name = recipes.getJSONObject(i).getString("name");
-                transaction.time = recipes.getJSONObject(i).getString("time");
-                transaction.comment = recipes.getJSONObject(i).getString("comment");
-                transaction.amount = recipes.getJSONObject(i).getString("amount");
-
-                transactionList.add(transaction);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return transactionList;
-    }
-
-    private static String loadJsonFromAsset(String filename, Context context) {
-        String json = null;
+    public JSONObject getJSONObject() {
+        JSONObject obj = new JSONObject();
 
         try {
-            InputStream is = context.getAssets().open(filename);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
+            obj.put("name", name);
+            obj.put("time", time);
+            obj.put("amount", amount);
+            obj.put("latitude", latitude);
+            obj.put("longitude", longitude);
+            obj.put("comment", comment);
+            obj.put("location", location);
         }
-        catch (java.io.IOException ex) {
-            ex.printStackTrace();
-            return null;
+        catch (JSONException e) {
+            System.out.println("Error converting JSON to Object");
         }
 
-        return json;
+        return obj;
     }
+
+
 }

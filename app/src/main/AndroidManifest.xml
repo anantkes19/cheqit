@@ -3,6 +3,7 @@
     package="devops.colby.cheqit">
 
     <application
+        android:name=".JsonHandler"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".AddActivity"></activity>
     </application>
 
 </manifest>

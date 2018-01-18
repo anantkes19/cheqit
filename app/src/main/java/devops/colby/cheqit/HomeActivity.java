@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -17,11 +19,21 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        final TextView mTextMessage = findViewById(R.id.title);
-        final Button button = findViewById(R.id.button_id);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        final Button historyButton = findViewById(R.id.button_history);
+
+        historyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent detailIntent = new Intent(context,HistoryActivity.class);
+                startActivity(detailIntent);
+            }
+        });
+
+        final Button addButton = findViewById(R.id.button_add);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(context,AddActivity.class);
                 startActivity(detailIntent);
             }
         });
