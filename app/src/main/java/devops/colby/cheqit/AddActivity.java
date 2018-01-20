@@ -31,18 +31,19 @@ public class AddActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Transaction newTransaction = new Transaction();
-                newTransaction.name = nameText.getText().toString();
-                newTransaction.amount = amountText.getText().toString();
-                newTransaction.time = String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute());
-                newTransaction.comment = commentText.getText().toString();
+                newTransaction.setName(nameText.getText().toString());
+                newTransaction.setAmount(amountText.getText().toString());
+                newTransaction.setTime(String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute()));
+                newTransaction.setComment(commentText.getText().toString());
 
-                JsonHandler handler = (JsonHandler)getApplication();
+                JsonHandler<Transaction> handler = (JsonHandler)getApplication();
                 try {
-                    handler.setTransaction(newTransaction);
+                    handler.setJSONObjects(newTransaction,"history");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                finishActivity(0);
+                //End current activity
+                finish();
             }
         });
     }

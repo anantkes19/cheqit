@@ -11,4 +11,11 @@
     <string name="add_comment">Additional Info</string>
     <string name="add_location">Location</string>
     <string name="add_title">Add a Transaction!</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_add">Add Accounts</string>
+    <string name="settings_accounts">Edit Accounts</string>
+    <string name="settings_add_name">Name of Account</string>
+    <string name="settings_clear">Delete all Transactions</string>
+    <string name="settings_add_amount">Current Amount in Account</string>
+    <string name="settings_add_comment">Additional Info</string>
 </resources>

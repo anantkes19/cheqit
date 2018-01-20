@@ -38,6 +38,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        final Button settingsButton = findViewById(R.id.button_settings);
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(context,SettingsActivity.class);
+                startActivity(detailIntent);
+            }
+        });
+
     }
 
 }

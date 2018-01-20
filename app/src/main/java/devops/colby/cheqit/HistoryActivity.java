@@ -7,17 +7,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
-    private ListView pastTransactions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        JsonHandler handler = (JsonHandler)getApplication();
-        ArrayList<Transaction> transactionList = handler.getTransactions("history");
+        JsonHandler<Transaction> handler = (JsonHandler)getApplication();
+        ArrayList<Transaction> transactionList = handler.getJSONObjects("history", Transaction.class);
 
-        pastTransactions = (ListView) findViewById(R.id.past_transactions_list_view);
+        ListView pastTransactions = findViewById(R.id.past_transactions_list_view);
 
 
 
