@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddAccountActivity extends AppCompatActivity {
@@ -29,12 +30,21 @@ public class AddAccountActivity extends AppCompatActivity {
                 newAccount.setAmount(amountText.getText().toString());
                 newAccount.setComment(commentText.getText().toString());
 
+
+
+
                 JsonHandler<Account> handler = (JsonHandler)getApplication();
+
+                ArrayList<Account> objectList = handler.getJSONObjects("accounts", Account.class);
+
+                objectList.add(newAccount);
+
                 try {
-                    handler.setJSONObjects(newAccount,"accounts");
+                    handler.setJSONObjects(objectList, "accounts");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
                 //End current activity
                 finish();
             }

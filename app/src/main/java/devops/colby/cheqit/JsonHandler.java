@@ -40,16 +40,14 @@ public class JsonHandler<T extends userObject> extends Application {
         return objectList;
     }
 
-    public void setJSONObjects(T newObject, String filename) throws IOException {
-        ArrayList<T> objectList = getJSONObjects(filename, (Class<T>) newObject.getClass());
+    public void setJSONObjects(ArrayList<T> newObjects, String filename) throws IOException {
 
-        objectList.add(newObject);
         JSONArray jsonArray = new JSONArray();
 
 
-        for(int i=0; i <objectList.size();i++) {
+        for(int i=0; i <newObjects.size();i++) {
 
-            jsonArray.put(objectList.get(i).getJSONObject());
+            jsonArray.put(newObjects.get(i).getJSONObject());
         }
 
         String jsonString = jsonArray.toString();
@@ -58,53 +56,6 @@ public class JsonHandler<T extends userObject> extends Application {
         fos.close();
 
     }
-
-    /*public ArrayList<Account> getAccounts(String filename){
-        final ArrayList<Account> accountList = new ArrayList<>();
-
-        try {
-            // Load data
-            String jsonString = loadJson(filename);
-
-            JSONArray accounts = new JSONArray(jsonString);
-
-            // Get Account objects from data
-            for(int i = 0; i < accounts.length(); i++){
-                Account account = new Account();
-
-                account.setName(accounts.getJSONObject(i).getString("name"));
-                //account.setTime(accounts.getJSONObject(i).getString("time"));
-                account.setComment(accounts.getJSONObject(i).getString("comment"));
-                account.setAmount(accounts.getJSONObject(i).getString("amount"));
-
-                accountList.add(account);
-            }
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
-
-        return accountList;
-    }
-
-    public void setAccounts(Account account) throws IOException {
-        ArrayList<Account> accountList = getAccounts("accounts");
-
-        accountList.add(account);
-        JSONArray jsonArray = new JSONArray();
-
-
-        for(int i=0; i <accountList.size();i++) {
-
-            jsonArray.put(accountList.get(i).getJSONObject());
-        }
-
-        String jsonString = jsonArray.toString();
-        FileOutputStream fos = openFileOutput("accounts", Context.MODE_PRIVATE);
-        fos.write(jsonString.getBytes());
-        fos.close();
-
-    }*/
-
 
     private String loadJson(String filename) throws IOException {
         String json;
@@ -115,6 +66,10 @@ public class JsonHandler<T extends userObject> extends Application {
         json = new String(buffer, "UTF-8");
 
         return json;
+    }
+
+    public void deleteAllTransactions() {
+        deleteFile("history");
     }
 
 

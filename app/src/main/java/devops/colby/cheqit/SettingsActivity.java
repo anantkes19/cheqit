@@ -32,5 +32,14 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(detailIntent);
             }
         });
+
+        final Button clearAllButton = findViewById(R.id.button_settings_clear);
+
+        clearAllButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //TODO Add a "ARE YOU SURE?" confirmation
+                deleteFile("history");
+            }
+        });
     }
 }

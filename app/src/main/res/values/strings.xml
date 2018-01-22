@@ -18,4 +18,7 @@
     <string name="settings_clear">Delete all Transactions</string>
     <string name="settings_add_amount">Current Amount in Account</string>
     <string name="settings_add_comment">Additional Info</string>
+    <string name="settings_submit">Add Account</string>
+    <string name="settings_edit_account">Save Account</string>
+    <string name="settings_delete_account">Delete Account</string>
 </resources>

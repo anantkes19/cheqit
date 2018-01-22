@@ -23,6 +23,10 @@ public class Account implements userObject{
         name = newName;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 
     public String getComment() {
         return comment;
