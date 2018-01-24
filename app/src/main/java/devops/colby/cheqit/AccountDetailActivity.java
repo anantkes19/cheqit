@@ -1,11 +1,14 @@
 package devops.colby.cheqit;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +45,7 @@ public class AccountDetailActivity extends AppCompatActivity {
         final EditText commentText = findViewById(R.id.settings_add_commentText);
 
         nameText.setText(account.getName());
-        amountText.setText(account.getAmount());
+        amountText.setText(String.valueOf(account.getAmount()));
         commentText.setText(account.getComment());
 
 
@@ -50,7 +53,7 @@ public class AccountDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 account.setName(nameText.getText().toString());
-                account.setAmount(amountText.getText().toString());
+                account.setAmount(Double.parseDouble(amountText.getText().toString()));
                 account.setComment(commentText.getText().toString());
 
                 JsonHandler<Account> handler = (JsonHandler)getApplication();
@@ -64,6 +67,7 @@ public class AccountDetailActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 //End current activity
+                Toast.makeText(getApplicationContext(), "Edits Saved", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 setResult(RESULT_OK,intent );
                 finish();
@@ -72,6 +76,29 @@ public class AccountDetailActivity extends AppCompatActivity {
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                builder.setMessage("Are you sure you wish to delete this account?");
+                builder.setCancelable(false);
+                final boolean[] confirmation = {false};
+                builder.setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+
+                        return;
+                    }
+                });
+                builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        confirmation[0] = true;
+                    }
+                });
+
+                //Actually fix this with dialogs.
+
+                AlertDialog dialog = builder.create();
+                dialog.show();*/
 
                 JsonHandler<Account> handler = (JsonHandler)getApplication();
 
@@ -83,6 +110,7 @@ public class AccountDetailActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 //End current activity
+                Toast.makeText(getApplicationContext(), "Account Deleted", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 setResult(RESULT_OK,intent );
                 finish();

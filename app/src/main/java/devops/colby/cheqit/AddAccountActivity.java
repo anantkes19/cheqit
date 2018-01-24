@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,9 +28,10 @@ public class AddAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Account newAccount = new Account();
                 newAccount.setName(nameText.getText().toString());
-                newAccount.setAmount(amountText.getText().toString());
+                newAccount.setAmount(Double.parseDouble(amountText.getText().toString()));
                 newAccount.setComment(commentText.getText().toString());
-
+                newAccount.setTimesUsed(0);
+                newAccount.setTotalSpent(0.0);
 
 
 
@@ -46,6 +48,7 @@ public class AddAccountActivity extends AppCompatActivity {
                 }
 
                 //End current activity
+                Toast.makeText(getApplicationContext(), "Account Added", Toast.LENGTH_LONG).show();
                 finish();
             }
         });

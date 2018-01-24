@@ -21,4 +21,10 @@
     <string name="settings_submit">Add Account</string>
     <string name="settings_edit_account">Save Account</string>
     <string name="settings_delete_account">Delete Account</string>
+    <string name="add_expense_on">Income</string>
+    <string name="add_expense_off">Expense</string>
+    <string name="radio_expense">Expense</string>
+    <string name="radio_income">Income</string>
+    <string name="add_account_name">Account: </string>
+    <string name="add_photo">Take Photo of Receipt</string>
 </resources>

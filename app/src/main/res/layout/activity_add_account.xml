@@ -33,7 +33,7 @@
             android:id="@+id/settings_add_amountText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/settings_add_nameText"
             android:layout_centerInParent="true"
             android:inputType="textPersonName"
@@ -42,7 +42,7 @@
             android:id="@+id/settings_add_commentText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/settings_add_amountText"
             android:layout_centerInParent="true"
             android:inputType="textPersonName"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_width="200dp"
             android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/settings_add_commentText"
             android:text="@string/settings_submit" />
     </RelativeLayout>

@@ -10,9 +10,9 @@ import org.json.JSONObject;
 public class Account implements userObject{
     private String name;
     private String comment;
-    private String amount; //Current amount in Account
+    private double amount; //Current amount in Account
     private Integer timesUsed;
-    private Integer totalSpent;
+    private double totalSpent;
 
 
     public String getName() {
@@ -36,11 +36,11 @@ public class Account implements userObject{
         comment = newComment;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String newAmount) {
+    public void setAmount(double newAmount) {
         amount = newAmount;
     }
 
@@ -52,11 +52,11 @@ public class Account implements userObject{
         timesUsed = newTimesUsed;
     }
 
-    public Integer getTotalSpent() {
+    public double getTotalSpent() {
         return totalSpent;
     }
 
-    public void setTotalSpent(Integer newTotalSpent) {
+    public void setTotalSpent(double newTotalSpent) {
         totalSpent = newTotalSpent;
     }
 
@@ -79,8 +79,10 @@ public class Account implements userObject{
 
     public void setAttributes(JSONObject jsonString) throws JSONException {
         this.setName(jsonString.getString("name"));
-        //this.setTime(accounts.getJSONObject(i).getString("time"));
         this.setComment(jsonString.getString("comment"));
-        this.setAmount(jsonString.getString("amount"));
+        this.setAmount(jsonString.getDouble("amount"));
+        this.setTotalSpent(jsonString.getDouble("totalSpent"));
+        this.setTimesUsed((jsonString.getInt("timesUsed")));
+
     }
 }

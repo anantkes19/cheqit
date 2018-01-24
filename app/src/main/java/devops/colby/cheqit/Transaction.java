@@ -12,13 +12,15 @@ import org.json.JSONObject;
 public class Transaction implements userObject {
     private String name; //Name optional
     private String time; //Date time?
+    //TODO private Date
     private String comment;
-    private String amount;
+    private double amount;
     //Something to store an image
     private String accountUsed; //How to store this data as json?
     private String location;
     private Double latitude; //lat/long should be saved as array
     private Double longitude;
+    private boolean expense;
 
     public String getName() {
         return name;
@@ -44,11 +46,11 @@ public class Transaction implements userObject {
         comment = newComment;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String newAmount) {
+    public void setAmount(double newAmount) {
         amount = newAmount;
     }
 
@@ -84,16 +86,25 @@ public class Transaction implements userObject {
         accountUsed = newAccount;
     }
 
+    public boolean getIsExpense() {
+        return expense;
+    }
+
+    public void setIsExpense(boolean newExpense) {
+        expense = newExpense;
+    }
+
 
     public void setAttributes(JSONObject jsonString) throws JSONException {
         this.setName(jsonString.getString("name"));
         this.setTime(jsonString.getString("time"));
         this.setComment(jsonString.getString("comment"));
-        this.setAmount(jsonString.getString("amount"));
+        this.setAmount(jsonString.getDouble("amount"));
         this.setLatitude(jsonString.getDouble("latitude"));
         this.setLongitude(jsonString.getDouble("longitude"));
         this.setLocation(jsonString.getString("location"));
         this.setAccount(jsonString.getString("account"));
+        this.setIsExpense(jsonString.getBoolean("expense"));
     }
 
     public JSONObject getJSONObject() {
@@ -108,6 +119,7 @@ public class Transaction implements userObject {
             obj.put("comment", comment);
             obj.put("location", location);
             obj.put("account", accountUsed);
+            obj.put("expense", expense);
 
         }
         catch (JSONException e) {

@@ -51,31 +51,32 @@ public class AccountAdapter extends BaseAdapter {
 
             holder = new AccountAdapter.ViewHolder();
             holder.nameTextView = (TextView) convertView.findViewById(R.id.account_list_name);
-            //holder.timeTextView = (TextView) convertView.findViewById(R.id.account_list_time);
-            holder.amountTextView = (TextView) convertView.findViewById(R.id.account_list_amount);
+            holder.totalAmountTextView = (TextView) convertView.findViewById(R.id.account_list_total_amount);
+            holder.amountTextView = (TextView) convertView.findViewById(R.id.account_list_current_amount);
             holder.commentTextView = (TextView) convertView.findViewById(R.id.account_list_comment);
             convertView.setTag(holder);
         }
         else{
             holder = (AccountAdapter.ViewHolder) convertView.getTag();
         }
-
+        Account account = (Account) getItem(position);
+        String amount = "Current Amount: $" + String.valueOf(account.getAmount());
+        String totalAmount = "Total Spent: $" + String.valueOf(account.getTotalSpent());
         TextView nameTextView = holder.nameTextView;
-        //TextView timeTextView = holder.timeTextView;
+        TextView totalAmountTextView = holder.totalAmountTextView;
         TextView amountTextView = holder.amountTextView;
         TextView commentTextView = holder.commentTextView;
-        Account account = (Account) getItem(position);
-        String amount = "$" + account.getAmount();
+
         nameTextView.setText(account.getName());
         amountTextView.setText(amount);
-        //timeTextView.setText(account.getTime());
+        totalAmountTextView.setText(totalAmount);
         commentTextView.setText(account.getComment());
         //Picasso.with(mContext).load(recipe.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
         return convertView;
     }
     private static class ViewHolder {
         public TextView nameTextView;
-        //public TextView timeTextView;
+        public TextView totalAmountTextView;
         public TextView amountTextView;
         public TextView commentTextView;
     }
