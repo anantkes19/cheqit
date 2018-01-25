@@ -154,6 +154,7 @@ public class AddActivity extends AppCompatActivity {
                 newTransaction.setAmount(Double.parseDouble(amountText.getText().toString()));
                 newTransaction.setTime(String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute()));
                 newTransaction.setComment(commentText.getText().toString());
+                newTransaction.setphotoUri(mCurrentPhotoPath);
 
                 RadioButton expenseButton = (RadioButton) findViewById(expenseGroup.getCheckedRadioButtonId());
 

@@ -8,21 +8,23 @@
     <RelativeLayout android:id="@+id/RelativeLayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <TextView
             android:id="@+id/titleText"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="@string/add_title"
             android:textAlignment="center"
             android:textSize="30sp" />
         <EditText
             android:id="@+id/nameText"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="80dp"
@@ -32,20 +34,13 @@
 
 
             <LinearLayout android:id="@+id/LinearLayout01"
-                android:layout_width="300dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/nameText"
                 android:layout_marginTop="@dimen/form_item_gap"
-                android:layout_centerInParent="true"
+
+
                 xmlns:android="http://schemas.android.com/apk/res/android">
-                <EditText
-                    android:id="@+id/amountText"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:inputType="numberDecimal"
-                    android:hint="@string/add_amount" />
                 <RadioGroup
                     android:id="@+id/radioGroup"
                     android:layout_weight="0"
@@ -68,47 +63,41 @@
 
 
                 </RadioGroup>
+                <Spinner
+                    android:id="@+id/accountSelection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown"
+                    android:layout_gravity="center_vertical"
+                    />
 
+
+                <EditText
+                    android:id="@+id/amountText"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/add_amount" />
 />
             </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/LinearLayout02"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/LinearLayout01"
-            android:layout_marginTop="@dimen/form_item_gap"
-            android:layout_centerInParent="true">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_account_name"
-
-                android:textSize="18sp"
-                />
-            <Spinner
-                android:id="@+id/accountSelection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown"
-                />
-        </LinearLayout>
 
 
         <EditText
             android:id="@+id/locationText"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_item_gap"
-            android:layout_below="@+id/LinearLayout02"
+            android:layout_below="@+id/LinearLayout01"
             android:layout_centerInParent="true"
             android:inputType="textPersonName"
             android:hint="@string/add_location" />
 
         <TimePicker
             android:id="@+id/timeText"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/locationText"
@@ -119,14 +108,14 @@
         <Button
             android:id="@+id/photo_button"
             android:layout_height="wrap_content"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/timeText"
             android:text="@string/add_photo" />
         <ImageView
             android:id="@+id/photo_image"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/form_item_gap"
@@ -134,7 +123,7 @@
 
         <EditText
             android:id="@+id/commentText"
-            android:layout_width="300dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/photo_image"
@@ -144,7 +133,7 @@
         <Button
             android:id="@+id/button_submit"
             android:layout_height="wrap_content"
-            android:layout_width="200dp"
+            android:layout_width="fill_parent"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/commentText"

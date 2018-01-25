@@ -21,6 +21,7 @@ public class Transaction implements userObject {
     private Double latitude; //lat/long should be saved as array
     private Double longitude;
     private boolean expense;
+    private String photoUri;
 
     public String getName() {
         return name;
@@ -94,6 +95,13 @@ public class Transaction implements userObject {
         expense = newExpense;
     }
 
+    public String getphotoUri() {
+        return photoUri;
+    }
+
+    public void setphotoUri(String newPhotoUri) {
+        photoUri = newPhotoUri;
+    }
 
     public void setAttributes(JSONObject jsonString) throws JSONException {
         this.setName(jsonString.getString("name"));
