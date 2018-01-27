@@ -95,11 +95,11 @@ public class Transaction implements userObject {
         expense = newExpense;
     }
 
-    public String getphotoUri() {
+    public String getPhotoUri() {
         return photoUri;
     }
 
-    public void setphotoUri(String newPhotoUri) {
+    public void setPhotoUri(String newPhotoUri) {
         photoUri = newPhotoUri;
     }
 
@@ -113,6 +113,7 @@ public class Transaction implements userObject {
         this.setLocation(jsonString.getString("location"));
         this.setAccount(jsonString.getString("account"));
         this.setIsExpense(jsonString.getBoolean("expense"));
+        this.setPhotoUri(jsonString.getString("photo"));
     }
 
     public JSONObject getJSONObject() {
@@ -128,6 +129,7 @@ public class Transaction implements userObject {
             obj.put("location", location);
             obj.put("account", accountUsed);
             obj.put("expense", expense);
+            obj.put("photo",photoUri);
 
         }
         catch (JSONException e) {

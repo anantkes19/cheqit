@@ -29,8 +29,10 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="80dp"
             android:layout_centerInParent="true"
-            android:inputType="textPersonName"
-            android:hint="@string/add_name" />
+            android:inputType="textCapSentences|textAutoCorrect"
+            android:hint="@string/add_name"
+            android:focusedByDefault="true"
+            />
 
 
             <LinearLayout android:id="@+id/LinearLayout01"

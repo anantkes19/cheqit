@@ -2,12 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="devops.colby.cheqit">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
-        android:required="true"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.location.gps" />
-    <uses-feature android:name="android.hardware.camera"
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
         android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:name=".JsonHandler"
         android:allowBackup="true"
@@ -30,7 +34,8 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".ListAccounts" />
         <activity android:name=".AddAccountActivity" />
-        <activity android:name=".AccountDetailActivity"></activity>
+        <activity android:name=".AccountDetailActivity" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="devops.colby.android.fileprovider"
@@ -41,6 +46,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".TransactionDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -27,4 +27,7 @@
     <string name="radio_income">Income</string>
     <string name="add_account_name">Account: </string>
     <string name="add_photo">Take Photo of Receipt</string>
+    <string name="edit_title">Edit Transaction</string>
+    <string name="edit_submit">Save Edits</string>
+    <string name="edit_delete">Delete Transaction</string>
 </resources>
