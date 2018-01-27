@@ -1,6 +1,7 @@
 package devops.colby.cheqit;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,67 +41,18 @@ public class TransactionDetailActivity extends AppCompatActivity {
     final Context context = this;
     static final int REQUEST_TAKE_PHOTO = 1;
     ImageView photoImage;
-
     String photoPath;
+    final Activity activity = this;
+    ImageCapture imageCapture;
+    private boolean userAcknowledged = false;
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        System.out.println(photoPath);
-        File f = new File(photoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
 
-        this.sendBroadcast(mediaScanIntent);
-    }
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        photoPath = image.getAbsolutePath();
-        return image;
-    }
-    //Method to take photos of the reciept/purchase for logging
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                System.out.println(MediaStore.EXTRA_OUTPUT);
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "devops.colby.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            /*System.out.println(data);
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("output");*/
-            Bitmap imageBitmap = BitmapFactory.decodeFile(photoPath);
-
-            photoImage.setImageBitmap(imageBitmap);
+            photoImage.setImageBitmap(imageCapture.getPhoto());
+            photoPath = imageCapture.getmCurrentPhotoPath();
         }
     }
 
@@ -109,6 +61,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_detail);
 
+        imageCapture = new ImageCapture(activity, context);
         final long id = this.getIntent().getExtras().getLong("id");
         JSONObject jsonString = null;
         try {
@@ -146,10 +99,9 @@ public class TransactionDetailActivity extends AppCompatActivity {
         commentText.setText(transaction.getComment());
 
         //Loading image
-        System.out.println("Photo Path: "+photoPath);
         if(photoPath != null) {
-            Bitmap imageBitmap = BitmapFactory.decodeFile(photoPath);
-            photoImage.setImageBitmap(imageBitmap);
+            imageCapture.setmCurrentPhotoPath((photoPath));
+            photoImage.setImageBitmap(imageCapture.getPhoto());
         }
         System.out.println("Photo Path: "+photoPath);
         //Setting radio boxes
@@ -172,7 +124,9 @@ public class TransactionDetailActivity extends AppCompatActivity {
         //Preparing photo button
         takePhoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+
+                imageCapture.dispatchTakePictureIntent();
+
 
             }
         });
@@ -180,7 +134,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                galleryAddPic();
+
                 Transaction newTransaction = new Transaction();
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

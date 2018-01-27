@@ -3,6 +3,7 @@ package devops.colby.cheqit;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -11,8 +12,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -44,69 +47,20 @@ import java.util.Date;
 
 public class AddActivity extends AppCompatActivity {
     final Context context = this;
+    final Activity activity = this;
     static final int REQUEST_TAKE_PHOTO = 1;
+    ImageCapture imageCapture;
     ImageView image;
-
+    private boolean userAcknowledged = false;
     String mCurrentPhotoPath;
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-    //Method to take photos of the reciept/purchase for logging
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                System.out.println(MediaStore.EXTRA_OUTPUT);
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "devops.colby.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            /*System.out.println(data);
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("output");*/
-            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
-            image.setImageBitmap(imageBitmap);
+            image.setImageBitmap(imageCapture.getPhoto());
+            mCurrentPhotoPath = imageCapture.getmCurrentPhotoPath();
+
         }
     }
     public void showInputMethod() {
@@ -130,9 +84,12 @@ public class AddActivity extends AppCompatActivity {
         final Button takePhoto = findViewById(R.id.photo_button);
         image = findViewById(R.id.photo_image);
 
+        //Bring up keyboard on activity start
         showInputMethod();
-        final boolean[] userAcknowledged = {false};
+
+        //final boolean[] userAcknowledged = {false}; //Todo fix this
         JsonHandler<Account> handler = (JsonHandler) getApplication();
+
         final ArrayList<Account> accountList = handler.getJSONObjects("accounts", Account.class);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -142,16 +99,21 @@ public class AddActivity extends AppCompatActivity {
         accountUsed.setAdapter(adapter);
         takePhoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+                imageCapture = new ImageCapture(activity, context);
+                imageCapture.dispatchTakePictureIntent();
+
 
             }
         });
+
+        //When submit transaction button is clicked
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
 
-                galleryAddPic();
                 Transaction newTransaction = new Transaction();
+
+                //Attempt to get coordinates of user
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     System.out.println("Permission Granted");
@@ -165,31 +127,35 @@ public class AddActivity extends AppCompatActivity {
                     newTransaction.setLongitude(0.00000);
                 }
 
-
+                //Setting attributes of transaction
                 newTransaction.setName(nameText.getText().toString());
                 newTransaction.setAmount(Double.parseDouble(amountText.getText().toString()));
                 newTransaction.setTime(String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute()));
                 newTransaction.setComment(commentText.getText().toString());
                 newTransaction.setPhotoUri(mCurrentPhotoPath);
+                newTransaction.setLocation(locationText.getText().toString());
+                newTransaction.setAccount(accountUsed.getSelectedItem().toString());
 
                 System.out.println("Photo Path: "+mCurrentPhotoPath);
 
                 RadioButton expenseButton = (RadioButton) findViewById(expenseGroup.getCheckedRadioButtonId());
-                System.out.println(expenseButton.getText());
+                //System.out.println(expenseButton.getText());
                 boolean expense = true;
-                if(expenseButton.getText() == "Income") {
+                System.out.println(expenseButton.getText());
+                if(expenseButton.getText().equals("Income")) {
+                    System.out.println("IS INCOME FINALLY");
                     expense = false;
                 }
-
+                System.out.println(expense);
                 newTransaction.setIsExpense(expense);
 
-                newTransaction.setLocation(locationText.getText().toString());
-                newTransaction.setAccount(accountUsed.getSelectedItem().toString());
+
+
 
                 //Check if account has enough money, subtract if it does. If it doesn't, cancel this addition (but save all info)
                 Account selectedAccount = accountList.get((int)accountUsed.getSelectedItemId());
 
-                if(selectedAccount.getAmount() < newTransaction.getAmount() && !userAcknowledged[0]) {
+                if(selectedAccount.getAmount() < newTransaction.getAmount() && !userAcknowledged && expense) {
                     //Invalid Transaction
                     //Notify User invalid #, cancel this action.
 
@@ -200,7 +166,7 @@ public class AddActivity extends AppCompatActivity {
                     builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();
-                            userAcknowledged[0] = true;
+                            userAcknowledged = true;
                         }
                     });
 
@@ -226,7 +192,7 @@ public class AddActivity extends AppCompatActivity {
 
                 //Updating the amount of an account and saving the file
                 JsonHandler<Account> handlerAccount = (JsonHandler)getApplication();
-                System.out.println(expenseButton.isChecked());
+
                 if(!expense) {
                     selectedAccount.setAmount(selectedAccount.getAmount() + newTransaction.getAmount());
                 } else {

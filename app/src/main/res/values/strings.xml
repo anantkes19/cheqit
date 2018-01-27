@@ -30,4 +30,5 @@
     <string name="edit_title">Edit Transaction</string>
     <string name="edit_submit">Save Edits</string>
     <string name="edit_delete">Delete Transaction</string>
+    <string name="settings_add_title">Add Account</string>
 </resources>
