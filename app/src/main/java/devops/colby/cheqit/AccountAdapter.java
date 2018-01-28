@@ -54,6 +54,7 @@ public class AccountAdapter extends BaseAdapter {
             holder.totalAmountTextView = (TextView) convertView.findViewById(R.id.account_list_total_amount);
             holder.amountTextView = (TextView) convertView.findViewById(R.id.account_list_current_amount);
             holder.commentTextView = (TextView) convertView.findViewById(R.id.account_list_comment);
+            holder.timesUsedView = (TextView) convertView.findViewById(R.id.account_list_times_used);
             convertView.setTag(holder);
         }
         else{
@@ -62,16 +63,18 @@ public class AccountAdapter extends BaseAdapter {
         Account account = (Account) getItem(position);
         String amount = "Current Amount: $" + String.valueOf(account.getAmount());
         String totalAmount = "Total Spent: $" + String.valueOf(account.getTotalSpent());
+        String timesUsed = "Times Used: " + String.valueOf(account.getTimesUsed());
         TextView nameTextView = holder.nameTextView;
         TextView totalAmountTextView = holder.totalAmountTextView;
         TextView amountTextView = holder.amountTextView;
         TextView commentTextView = holder.commentTextView;
+        TextView timesUsedView = holder.timesUsedView;
 
         nameTextView.setText(account.getName());
         amountTextView.setText(amount);
         totalAmountTextView.setText(totalAmount);
         commentTextView.setText(account.getComment());
-        //Picasso.with(mContext).load(recipe.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
+        timesUsedView.setText(timesUsed);
         return convertView;
     }
     private static class ViewHolder {
@@ -79,5 +82,6 @@ public class AccountAdapter extends BaseAdapter {
         public TextView totalAmountTextView;
         public TextView amountTextView;
         public TextView commentTextView;
+        public TextView timesUsedView;
     }
 }

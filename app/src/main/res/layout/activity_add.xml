@@ -115,7 +115,7 @@
             android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/timeText"
             android:text="@string/add_photo" />
-        
+
         <ImageView
             android:id="@+id/photo_image"
             android:layout_width="wrap_content"

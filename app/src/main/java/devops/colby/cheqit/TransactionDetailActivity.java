@@ -127,7 +127,10 @@ public class TransactionDetailActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, accountList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        //Setting Spinner to the account used
         accountUsed.setAdapter(adapter);
+        int spinnerPosition = adapter.getPosition(transaction.getAccount());
+        accountUsed.setSelection(spinnerPosition);
 
         //Preparing photo button
         takePhoto.setOnClickListener(new View.OnClickListener() {
