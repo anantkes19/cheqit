@@ -51,6 +51,7 @@ public class AddActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     ImageCapture imageCapture;
     ImageView image;
+
     private boolean userAcknowledged = false;
     String mCurrentPhotoPath;
 
@@ -83,6 +84,19 @@ public class AddActivity extends AppCompatActivity {
         final RadioGroup expenseGroup = findViewById(R.id.radioGroup);
         final Button takePhoto = findViewById(R.id.photo_button);
         image = findViewById(R.id.photo_image);
+
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent detailIntent = new Intent(context,ZoomedImageActivity.class);
+                detailIntent.putExtra("photo",mCurrentPhotoPath);
+                startActivity(detailIntent);
+            }
+        });
+
+
+
 
         //Bring up keyboard on activity start
         showInputMethod();
@@ -165,8 +179,8 @@ public class AddActivity extends AppCompatActivity {
 
                     builder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            userAcknowledged = true;
+                        dialog.dismiss();
+                        userAcknowledged = true;
                         }
                     });
 

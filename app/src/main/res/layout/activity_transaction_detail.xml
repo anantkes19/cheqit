@@ -123,7 +123,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/edit_photo_button"
             android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/form_item_gap" />
+            android:layout_marginTop="@dimen/form_item_gap"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:maxHeight="200dp" />
 
         <EditText
             android:id="@+id/edit_commentText"

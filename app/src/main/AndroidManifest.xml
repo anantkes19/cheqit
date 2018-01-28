@@ -46,7 +46,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".TransactionDetailActivity"></activity>
+        <activity android:name=".TransactionDetailActivity" />
+        <activity android:name=".ZoomedImageActivity"></activity>
     </application>
 
 </manifest>

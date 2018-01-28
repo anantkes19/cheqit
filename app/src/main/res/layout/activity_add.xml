@@ -115,13 +115,18 @@
             android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/timeText"
             android:text="@string/add_photo" />
+        
         <ImageView
             android:id="@+id/photo_image"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/form_item_gap"
-            android:layout_below="@+id/photo_button"/>
+            android:layout_below="@+id/photo_button"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:maxHeight="200dp"/>
+
 
         <EditText
             android:id="@+id/commentText"

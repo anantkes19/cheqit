@@ -5,15 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,7 +29,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Objects;
 
 public class TransactionDetailActivity extends AppCompatActivity {
     final Context context = this;
@@ -44,7 +37,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
     String photoPath;
     final Activity activity = this;
     ImageCapture imageCapture;
-    private boolean userAcknowledged = false;
+
 
 
 
@@ -53,6 +46,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             photoImage.setImageBitmap(imageCapture.getPhoto());
             photoPath = imageCapture.getmCurrentPhotoPath();
+
         }
     }
 
@@ -88,8 +82,9 @@ public class TransactionDetailActivity extends AppCompatActivity {
         final Spinner accountUsed = findViewById(R.id.edit_accountSelection);
         final RadioGroup expenseGroup = findViewById(R.id.edit_radioGroup);
         final Button takePhoto = findViewById(R.id.edit_photo_button);
-
         photoImage = findViewById(R.id.edit_photo_image);
+
+
 
         //TODO Load time picker with same time as submitted
         //timePicker.setHour();
@@ -102,7 +97,20 @@ public class TransactionDetailActivity extends AppCompatActivity {
         if(photoPath != null) {
             imageCapture.setmCurrentPhotoPath((photoPath));
             photoImage.setImageBitmap(imageCapture.getPhoto());
+
         }
+
+
+        photoImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent detailIntent = new Intent(context,ZoomedImageActivity.class);
+                detailIntent.putExtra("photo",photoPath);
+                startActivity(detailIntent);
+            }
+        });
+
+
         System.out.println("Photo Path: "+photoPath);
         //Setting radio boxes
         if(transaction.getIsExpense()) {
@@ -212,6 +220,11 @@ public class TransactionDetailActivity extends AppCompatActivity {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();*/
+                //Delete photo associated with the transaction
+                if(!transaction.getPhotoUri().equals("")) {
+                    File file = new File(transaction.getPhotoUri());
+                    file.delete();
+                }
 
                 JsonHandler<Transaction> handler = (JsonHandler)getApplication();
 
