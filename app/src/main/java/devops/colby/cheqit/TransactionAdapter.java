@@ -1,6 +1,7 @@
 package devops.colby.cheqit;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,9 @@ public class TransactionAdapter extends BaseAdapter {
             holder.timeTextView = (TextView) convertView.findViewById(R.id.transaction_list_time);
             holder.amountTextView = (TextView) convertView.findViewById(R.id.transaction_list_amount);
             holder.commentTextView = (TextView) convertView.findViewById(R.id.transaction_list_comment);
+            holder.accountTextView = (TextView) convertView.findViewById(R.id.transaction_list_account);
+            holder.locationTextView = (TextView) convertView.findViewById(R.id.transaction_list_location);
+
             convertView.setTag(holder);
         }
         else{
@@ -64,20 +68,35 @@ public class TransactionAdapter extends BaseAdapter {
         TextView timeTextView = holder.timeTextView;
         TextView amountTextView = holder.amountTextView;
         TextView commentTextView = holder.commentTextView;
+        TextView accountTextView = holder.accountTextView;
+        TextView locationTextView = holder.locationTextView;
+
         Transaction transaction = (Transaction) getItem(position);
         String amount = "$" + transaction.getAmount();
-        nameTextView.setText(transaction.getName());
+        if(transaction.getIsExpense()) {
+            amount = "-" + amount;
+            amountTextView.setTextColor(Color.RED);
+        } else {
+            amount = "+" + amount;
+            amountTextView.setTextColor(Color.GREEN);
+        }
+
         amountTextView.setText(amount);
+        nameTextView.setText(transaction.getName());
         timeTextView.setText(transaction.getTime());
         commentTextView.setText(transaction.getComment());
-        //Picasso.with(mContext).load(recipe.imageUrl).placeholder(R.mipmap.ic_launcher).into(thumbnailImageView);
+        accountTextView.setText(transaction.getAccount());
+        locationTextView.setText(transaction.getLocation());
+
         return convertView;
     }
     private static class ViewHolder {
-        public TextView nameTextView;
-        public TextView timeTextView;
-        public TextView amountTextView;
-        public TextView commentTextView;
+        TextView nameTextView;
+        TextView timeTextView;
+        TextView amountTextView;
+        TextView commentTextView;
+        TextView accountTextView;
+        TextView locationTextView;
     }
 
 }
