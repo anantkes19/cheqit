@@ -81,9 +81,12 @@ public class TransactionAdapter extends BaseAdapter {
             amountTextView.setTextColor(Color.GREEN);
         }
 
+        String time[] = transaction.getTime().split(":");
+        String newTime = time[0]+":"+String.format("%02d",Integer.parseInt(time[1]));
+
         amountTextView.setText(amount);
         nameTextView.setText(transaction.getName());
-        timeTextView.setText(transaction.getTime());
+        timeTextView.setText(newTime);
         commentTextView.setText(transaction.getComment());
         accountTextView.setText(transaction.getAccount());
         locationTextView.setText(transaction.getLocation());

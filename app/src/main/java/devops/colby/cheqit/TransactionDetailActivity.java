@@ -87,7 +87,9 @@ public class TransactionDetailActivity extends AppCompatActivity {
 
 
         //TODO Load time picker with same time as submitted
-        //timePicker.setHour();
+        String time[] = transaction.getTime().split(":");
+        timePicker.setHour(Integer.parseInt(time[0]));
+        timePicker.setMinute(Integer.parseInt(time[1]));
         photoPath = transaction.getPhotoUri();
         nameText.setText(transaction.getName());
         amountText.setText(String.valueOf(transaction.getAmount()));
@@ -160,18 +162,20 @@ public class TransactionDetailActivity extends AppCompatActivity {
                     newTransaction.setLongitude(0.00000);
                 }
 
-                transaction.setName(nameText.getText().toString());
-                transaction.setAmount(Double.parseDouble(amountText.getText().toString()));
-                transaction.setTime(String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute()));
-                transaction.setComment(commentText.getText().toString());
-                transaction.setPhotoUri(photoPath);
+                newTransaction.setName(nameText.getText().toString());
+                newTransaction.setAmount(Double.parseDouble(amountText.getText().toString()));
+                newTransaction.setTime(String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute()));
+                newTransaction.setComment(commentText.getText().toString());
+                newTransaction.setPhotoUri(photoPath);
 
 
 
                 RadioButton expenseButton = (RadioButton) findViewById(expenseGroup.getCheckedRadioButtonId());
 
+                //System.out.println(expenseButton.getText());
                 boolean expense = true;
-                if(expenseButton.getText() == "Income") {
+                if(expenseButton.getText().equals("Income")) {
+                    System.out.println("INCOME");
                     expense = false;
                 }
 
@@ -184,7 +188,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
 
                 ArrayList<Transaction> objectList = handler.getJSONObjects("history", Transaction.class);
                 objectList.remove((int)id);
-                objectList.add(transaction);
+                objectList.add(newTransaction);
                 try {
                     handler.setJSONObjects(objectList,"history");
                 } catch (IOException e) {
