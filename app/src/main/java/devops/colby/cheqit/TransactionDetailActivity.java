@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -29,12 +30,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class TransactionDetailActivity extends AppCompatActivity {
     final Context context = this;
     static final int REQUEST_TAKE_PHOTO = 1;
     ImageView photoImage;
-    String photoPath;
+    String photoPath ="";
     final Activity activity = this;
     ImageCapture imageCapture;
 
@@ -82,21 +84,27 @@ public class TransactionDetailActivity extends AppCompatActivity {
         final Spinner accountUsed = findViewById(R.id.edit_accountSelection);
         final RadioGroup expenseGroup = findViewById(R.id.edit_radioGroup);
         final Button takePhoto = findViewById(R.id.edit_photo_button);
+        final DatePicker datePicker = findViewById(R.id.edit_datePicker);
+
         photoImage = findViewById(R.id.edit_photo_image);
 
 
 
-        //TODO Load time picker with same time as submitted
         String time[] = transaction.getTime().split(":");
         timePicker.setHour(Integer.parseInt(time[0]));
         timePicker.setMinute(Integer.parseInt(time[1]));
+
+        String[] dateString = transaction.getDate().split(":");
+        datePicker.init(Integer.parseInt(dateString[0]),Integer.parseInt(dateString[1]),Integer.parseInt(dateString[2]), null);
+
+
         photoPath = transaction.getPhotoUri();
         nameText.setText(transaction.getName());
         amountText.setText(String.valueOf(transaction.getAmount()));
         commentText.setText(transaction.getComment());
 
         //Loading image
-        if(photoPath != null) {
+        if(photoPath != null && !Objects.equals(photoPath, "")) {
             imageCapture.setmCurrentPhotoPath((photoPath));
             photoImage.setImageBitmap(imageCapture.getPhoto());
 
@@ -167,6 +175,9 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 newTransaction.setTime(String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute()));
                 newTransaction.setComment(commentText.getText().toString());
                 newTransaction.setPhotoUri(photoPath);
+
+                String dateString = datePicker.getYear() + ":" + datePicker.getMonth() + ":" + datePicker.getDayOfMonth();
+                newTransaction.setDate(dateString);
 
 
 

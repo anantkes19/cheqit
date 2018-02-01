@@ -47,7 +47,8 @@
         </provider>
 
         <activity android:name=".TransactionDetailActivity" />
-        <activity android:name=".ZoomedImageActivity"></activity>
+        <activity android:name=".ZoomedImageActivity" />
+        <activity android:name=".DataActivity"></activity>
     </application>
 
 </manifest>

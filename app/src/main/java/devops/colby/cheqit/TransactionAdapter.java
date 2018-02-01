@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 
 /**
@@ -57,6 +59,7 @@ public class TransactionAdapter extends BaseAdapter {
             holder.commentTextView = (TextView) convertView.findViewById(R.id.transaction_list_comment);
             holder.accountTextView = (TextView) convertView.findViewById(R.id.transaction_list_account);
             holder.locationTextView = (TextView) convertView.findViewById(R.id.transaction_list_location);
+            holder.dateTextView = (TextView) convertView.findViewById(R.id.transaction_list_date);
 
             convertView.setTag(holder);
         }
@@ -70,6 +73,7 @@ public class TransactionAdapter extends BaseAdapter {
         TextView commentTextView = holder.commentTextView;
         TextView accountTextView = holder.accountTextView;
         TextView locationTextView = holder.locationTextView;
+        TextView dateTextView = holder.dateTextView;
 
         Transaction transaction = (Transaction) getItem(position);
         String amount = "$" + transaction.getAmount();
@@ -83,6 +87,8 @@ public class TransactionAdapter extends BaseAdapter {
 
         String time[] = transaction.getTime().split(":");
         String newTime = time[0]+":"+String.format("%02d",Integer.parseInt(time[1]));
+        String[] dateString = transaction.getDate().split(":");
+        String date = dateString[2] + "-" + getMonth(Integer.parseInt(dateString[1])) + "-" + dateString[0];
 
         amountTextView.setText(amount);
         nameTextView.setText(transaction.getName());
@@ -90,6 +96,8 @@ public class TransactionAdapter extends BaseAdapter {
         commentTextView.setText(transaction.getComment());
         accountTextView.setText(transaction.getAccount());
         locationTextView.setText(transaction.getLocation());
+        dateTextView.setText(date);
+
 
         return convertView;
     }
@@ -100,6 +108,13 @@ public class TransactionAdapter extends BaseAdapter {
         TextView commentTextView;
         TextView accountTextView;
         TextView locationTextView;
+        TextView dateTextView;
+
     }
+
+    public String getMonth(int month) {
+        return new DateFormatSymbols().getMonths()[month];
+    }
+
 
 }

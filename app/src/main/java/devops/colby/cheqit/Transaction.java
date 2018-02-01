@@ -4,21 +4,23 @@ package devops.colby.cheqit;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 /**
  * Created by Austin Nantkes on 1/13/2018.
  */
 
-public class Transaction implements userObject {
-    private String name; //Name optional
-    private String time; //Date time?
-    //TODO private Date
+public class Transaction implements userObject{
+    private String name;
+    private String time;
+    private String date;
     private String comment;
     private double amount;
-    //Something to store an image
-    private String accountUsed; //How to store this data as json?
+    private String accountUsed;
     private String location;
-    private Double latitude; //lat/long should be saved as array
+    private Double latitude; //lat/long could be saved as array
     private Double longitude;
     private boolean expense;
     private String photoUri;
@@ -103,6 +105,24 @@ public class Transaction implements userObject {
         photoUri = newPhotoUri;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String newDate) {
+        date = newDate;
+    }
+
+    public Calendar getDateTime() {
+        String time[] = this.getTime().split(":");
+
+        String[] dateString = this.getDate().split(":");
+        Calendar dateTime = Calendar.getInstance();
+        dateTime.set(Integer.parseInt(dateString[0]),Integer.parseInt(dateString[1]),Integer.parseInt(dateString[2]),Integer.parseInt(time[0]),Integer.parseInt(time[1]));
+
+        return dateTime;
+    }
+
     public void setAttributes(JSONObject jsonString) throws JSONException {
         this.setName(jsonString.getString("name"));
         this.setTime(jsonString.getString("time"));
@@ -114,6 +134,7 @@ public class Transaction implements userObject {
         this.setAccount(jsonString.getString("account"));
         this.setIsExpense(jsonString.getBoolean("expense"));
         this.setPhotoUri(jsonString.getString("photo"));
+        this.setDate(jsonString.getString("date"));
     }
 
     public JSONObject getJSONObject() {
@@ -130,6 +151,7 @@ public class Transaction implements userObject {
             obj.put("account", accountUsed);
             obj.put("expense", expense);
             obj.put("photo",photoUri);
+            obj.put("date",date);
 
         }
         catch (JSONException e) {

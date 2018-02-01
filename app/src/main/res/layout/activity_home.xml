@@ -5,17 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="devops.colby.cheqit.HomeActivity">
+
+    <ImageView
+        android:id="@+id/homeBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="false"
+        android:baselineAlignBottom="true"
+        android:src="@drawable/homebackground" />
     <RelativeLayout android:id="@+id/RelativeLayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
 
 
         xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView android:id="@+id/homeBackground"
-        android:src="@drawable/homebackground"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"/>
+
     <TextView
         android:id="@+id/app_id"
         android:layout_width="wrap_content"

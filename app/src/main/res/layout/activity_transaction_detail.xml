@@ -85,7 +85,6 @@
                 android:layout_weight="4"
                 android:hint="@string/add_amount"
                 android:inputType="numberDecimal" />
-            />
         </LinearLayout>
 
 
@@ -107,12 +106,22 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/form_item_gap"
             android:timePickerMode="spinner" />
+        <DatePicker
+            android:id="@+id/edit_datePicker"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edit_timeText"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/form_item_gap"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            />
 
         <Button
             android:id="@+id/edit_photo_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_timeText"
+            android:layout_below="@+id/edit_datePicker"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/form_item_gap"
             android:text="@string/add_photo" />

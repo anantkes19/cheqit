@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -53,7 +54,7 @@ public class AddActivity extends AppCompatActivity {
     ImageView image;
 
     private boolean userAcknowledged = false;
-    String mCurrentPhotoPath;
+    String mCurrentPhotoPath = "";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -83,6 +84,8 @@ public class AddActivity extends AppCompatActivity {
         final Spinner accountUsed = findViewById(R.id.accountSelection);
         final RadioGroup expenseGroup = findViewById(R.id.radioGroup);
         final Button takePhoto = findViewById(R.id.photo_button);
+        final DatePicker datePicker = findViewById(R.id.dateText);
+
         image = findViewById(R.id.photo_image);
 
 
@@ -150,14 +153,17 @@ public class AddActivity extends AppCompatActivity {
                 newTransaction.setLocation(locationText.getText().toString());
                 newTransaction.setAccount(accountUsed.getSelectedItem().toString());
 
+                String dateString = datePicker.getYear() + ":" + datePicker.getMonth() + ":" + datePicker.getDayOfMonth();
+                newTransaction.setDate(dateString);
+
                 System.out.println("Photo Path: "+mCurrentPhotoPath);
 
                 RadioButton expenseButton = (RadioButton) findViewById(expenseGroup.getCheckedRadioButtonId());
-                //System.out.println(expenseButton.getText());
+
                 boolean expense = true;
                 System.out.println(expenseButton.getText());
                 if(expenseButton.getText().equals("Income")) {
-                    System.out.println("IS INCOME FINALLY");
+                    System.out.println("Is Income");
                     expense = false;
                 }
                 System.out.println(expense);

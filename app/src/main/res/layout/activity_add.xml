@@ -101,11 +101,22 @@
         <TimePicker
             android:id="@+id/timeText"
             android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/locationText"
             android:layout_centerInParent="true"
             android:timePickerMode="spinner"
+            />
+
+        <DatePicker
+            android:id="@+id/dateText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timeText"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/form_item_gap"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
             />
 
         <Button
@@ -114,7 +125,7 @@
             android:layout_width="fill_parent"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/form_item_gap"
-            android:layout_below="@+id/timeText"
+            android:layout_below="@+id/dateText"
             android:text="@string/add_photo" />
 
         <ImageView
@@ -146,5 +157,6 @@
             android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/commentText"
             android:text="@string/add_submit" />
+
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
