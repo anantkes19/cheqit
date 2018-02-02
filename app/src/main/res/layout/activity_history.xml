@@ -7,7 +7,7 @@
     tools:context="devops.colby.cheqit.HistoryActivity"
     android:orientation="vertical">
     <RelativeLayout
-
+        android:id="@+id/RelativeLayout01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -16,9 +16,12 @@
             android:layout_height="wrap_content"
             android:text="@string/list_transactions_title"
             android:textSize="30sp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_width="wrap_content" />
+            android:paddingStart="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@android:color/primary_text_dark"
+            android:background="@color/colorPrimary"
+            android:paddingTop="@dimen/form_item_gap"
+            android:layout_width="match_parent" />
 
         <SearchView
             android:id="@+id/past_search"
@@ -28,6 +31,11 @@
             android:layout_alignParentEnd="true"
             />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        />
     <ListView
         android:id="@+id/past_transactions_list_view"
         android:layout_height="match_parent"

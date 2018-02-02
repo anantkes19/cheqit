@@ -10,14 +10,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="devops.colby.cheqit.DataActivity">
-
+        <TextView
+            android:id="@+id/data_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Data Analysis"
+            android:textSize="15pt"
+            android:paddingBottom="5dp"
+            android:textColor="@android:color/primary_text_dark"
+            android:background="@color/colorPrimary"
+            android:paddingTop="@dimen/form_item_gap"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/data_title"/>
         <TextView
             android:id="@+id/data_accounts_spent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Most Money Spent"
-            android:textSize="15pt"
+            android:textSize="12pt"
+            android:layout_marginTop="@dimen/form_item_gap"
             android:layout_centerHorizontal="true"
+            android:layout_below="@+id/data_title"
             android:textAlignment="center"/>
         <LinearLayout
             android:id="@+id/data_most_spent"
@@ -45,13 +63,19 @@
                 />
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/data_most_spent"/>
         <TextView
             android:id="@+id/data_accounts_used"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Most Used Account"
             android:layout_below="@+id/data_most_spent"
-            android:textSize="15pt"
+            android:layout_marginTop="@dimen/form_item_gap"
+            android:textSize="12pt"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"/>
         <LinearLayout
@@ -79,12 +103,18 @@
                 android:textSize="12pt"/>
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/data_most_used"/>
         <TextView
             android:id="@+id/data_expensive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Most Expensive Transaction"
             android:layout_below="@+id/data_most_used"
+            android:layout_marginTop="@dimen/form_item_gap"
             android:textSize="12pt"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"/>
@@ -113,12 +143,18 @@
                 android:textSize="12pt"/>
 
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/data_most_expensive"/>
         <TextView
             android:id="@+id/data_map_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Heatmap of all Transactions"
             android:layout_below="@+id/data_most_expensive"
+            android:layout_marginTop="@dimen/form_item_gap"
             android:textSize="10pt"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"/>
@@ -134,11 +170,17 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/data_map_title"
             tools:context=".MapsActivity" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/map"/>
         <TextView
             android:id="@+id/data_data_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total Money Spent in the Last Month"
+            android:layout_marginTop="@dimen/form_item_gap"
             android:layout_below="@+id/map"
             android:textSize="10pt"
             android:layout_centerHorizontal="true"
@@ -151,12 +193,18 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="8dp"
             android:layout_below="@+id/data_data_month"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/data_graph_30"/>
         <TextView
             android:id="@+id/data_data_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Money Spent Each Day"
             android:layout_below="@+id/data_graph_30"
+            android:layout_marginTop="@dimen/form_item_gap"
             android:textSize="10pt"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"/>

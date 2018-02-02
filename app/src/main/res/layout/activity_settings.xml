@@ -12,19 +12,28 @@
 
         <TextView
             android:id="@+id/settings_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="40dp"
             android:textSize="34sp"
-            android:text="@string/settings_title"/>
+            android:text="@string/settings_title"
+            android:paddingBottom="5dp"
+            android:textColor="@android:color/primary_text_dark"
+            android:background="@color/colorPrimary"
+            android:paddingTop="@dimen/form_item_gap"
+            android:textAlignment="center"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/settings_title"/>
         <Button
             android:id="@+id/button_settings_add"
             android:layout_height="wrap_content"
             android:layout_width="200dp"
             android:layout_centerInParent="true"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:layout_below="@+id/settings_title"
             android:text="@string/settings_add" />
         <Button

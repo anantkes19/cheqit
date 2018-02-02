@@ -34,4 +34,5 @@
     <string name="list_account_title">Accounts</string>
     <string name="list_transactions_title">Past Transactions</string>
     <string name="export_transactions">Export Transactions</string>
+    <string name="add_settings_title">Add Account</string>
 </resources>
