@@ -1,11 +1,14 @@
 package devops.colby.cheqit;
 
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,26 +18,135 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class DataActivity extends FragmentActivity implements OnMapReadyCallback {
     ArrayList<Transaction> transactionList;
+    ArrayList<Transaction> graphTransactionList;
     ArrayList<Account> accountList;
     private GoogleMap mMap;
     HeatmapTileProvider mProvider;
     TileOverlay mOverlay;
+    double sum;
+
+
+    public LineGraphSeries<DataPoint> getGraphData() {
+        LineGraphSeries<DataPoint> dataPoints = new LineGraphSeries<>();
+        Date today = new Date();
+        Calendar now = Calendar.getInstance();
+        now.setTime(today);
+        graphTransactionList = new ArrayList<>(transactionList); //Make shallow copy of transactionList
+
+        Collections.sort(graphTransactionList, new Comparator<Transaction>() {
+            public int compare(Transaction o1, Transaction o2) {
+                if (o1.getDateTime() == null || o2.getDateTime() == null)
+                    return 0;
+                return o1.getDateTime().compareTo(o2.getDateTime());
+            }
+        });
+        double numDays = TimeUnit.MILLISECONDS.toDays(Math.abs(now.getTimeInMillis() - graphTransactionList.get(0).getDateTime().getTimeInMillis()));
+
+
+        ArrayList<ArrayList<Double>> graphData = new ArrayList<>();
+        for(int fill = 0; fill < (int) numDays+1; fill ++) {
+            graphData.add(new ArrayList<Double>());
+        }
+
+        for(int i = 0; i<graphTransactionList.size(); i++) {
+            if(graphTransactionList.get(i).getDateTime().before(now) && graphTransactionList.get(i).getIsExpense()) {
+                System.out.println("####### Transaction Found for Graph");
+                double timeDifference = TimeUnit.MILLISECONDS.toDays(Math.abs(now.getTimeInMillis() - graphTransactionList.get(i).getDateTime().getTimeInMillis()));
+
+                graphData.get((int) timeDifference).add(graphTransactionList.get(i).getAmount());
+
+            }
+        }
+        for(int day = 0; day < graphData.size(); day++) {
+            sum = 0;
+            for(int transaction = 0; transaction < graphData.get(day).size(); transaction++) {
+                sum += graphData.get(day).get(transaction);
+            }
+            dataPoints.appendData(new DataPoint(day,sum),false,10000,false);
+        }
+            //
+        dataPoints.setColor(Color.GREEN);
+        dataPoints.setDataPointsRadius(5);
+        dataPoints.setThickness(4);
+        dataPoints.setTitle("Money Spent per Day");
+        return dataPoints;
+    }
+
+    public LineGraphSeries<DataPoint> getGraphDataTotal(Date date) {
+        LineGraphSeries<DataPoint> dataPoints = new LineGraphSeries<>();
+        Date today = new Date();
+        Calendar calendar = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
+        calendar.setTime(date);
+        now.setTime(today);
+        graphTransactionList = new ArrayList<>(transactionList); //Make shallow copy of transactionList
+        ArrayList<ArrayList<Double>> graphData = new ArrayList<>();
+        for(int fill = 0; fill < 30; fill ++) {
+            graphData.add(new ArrayList<Double>());
+        }
+
+        for(int i = 0; i<graphTransactionList.size(); i++) {
+            if(graphTransactionList.get(i).getDateTime().before(now) && graphTransactionList.get(i).getDateTime().after(calendar) && graphTransactionList.get(i).getIsExpense()) {
+                System.out.println("####### Transaction Found for Graph");
+                double timeDifference = TimeUnit.MILLISECONDS.toDays(Math.abs(now.getTimeInMillis() - graphTransactionList.get(i).getDateTime().getTimeInMillis()));
+
+                graphData.get((int) timeDifference).add(graphTransactionList.get(i).getAmount());
+
+            }
+        }
+        sum = 0;
+        for(int day = 29; day >= 0; day--) {
+
+            for(int transaction = 0; transaction < graphData.get(day).size(); transaction++) {
+                sum += graphData.get(day).get(transaction);
+            }
+
+        }
+
+        for(int day = 0; day < graphData.size(); day++) {
+            dataPoints.appendData(new DataPoint(day,sum),false,10000,false);
+            for(int transaction = 0; transaction < graphData.get(day).size(); transaction++) {
+                sum -= graphData.get(day).get(transaction);
+            }
+        }
+        //
+        dataPoints.appendData(new DataPoint(30,0),false,10000,false);
+        dataPoints.setColor(Color.GREEN);
+        dataPoints.setDataPointsRadius(5);
+        dataPoints.setThickness(4);
+        dataPoints.setTitle("Total Money Spent per Day");
+        return dataPoints;
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng center = new LatLng(transactionList.get(0).getLatitude(),transactionList.get(0).getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(center));
+
         addHeatMap();
     }
     @Override
@@ -52,6 +164,8 @@ public class DataActivity extends FragmentActivity implements OnMapReadyCallback
         final TextView mostUsedAmount = findViewById(R.id.data_most_used_amount);
         final TextView mostExpensiveName = findViewById(R.id.data_most_expensive_name);
         final TextView mostExpensiveAmount = findViewById(R.id.data_most_expensive_amount);
+        final GraphView past30Day = findViewById(R.id.data_graph_30);
+        final GraphView pastSpending = findViewById(R.id.data_graph_spending);
 
 
 
@@ -70,6 +184,19 @@ public class DataActivity extends FragmentActivity implements OnMapReadyCallback
         Date past60 = calendar.getTime();
         calendar.add(Calendar.DAY_OF_MONTH, -30); //Past 90 Days
         Date past90 = calendar.getTime();
+
+        pastSpending.addSeries(getGraphData());
+        pastSpending.getViewport().setScrollable(true);
+        pastSpending.getViewport().setScrollableY(true);
+        pastSpending.getViewport().setScalable(true);
+        pastSpending.getViewport().setScalableY(true);
+
+        past30Day.addSeries(getGraphDataTotal(past30));
+        past30Day.getViewport().setScrollable(true);
+        past30Day.getViewport().setScrollableY(true);
+        past30Day.getViewport().setScalable(true);
+        past30Day.getViewport().setScalableY(true);
+
 
         Collections.sort(transactionList, new Comparator<Transaction>() {
             public int compare(Transaction o1, Transaction o2) {
