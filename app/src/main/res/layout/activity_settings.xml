@@ -36,12 +36,20 @@
             android:layout_below="@+id/button_settings_add"
             android:text="@string/settings_accounts" />
         <Button
-            android:id="@+id/button_settings_clear"
+            android:id="@+id/button_settings_export"
             android:layout_height="wrap_content"
             android:layout_width="200dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="40dp"
             android:layout_below="@+id/button_settings_accounts"
+            android:text="@string/export_transactions" />
+        <Button
+            android:id="@+id/button_settings_clear"
+            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/button_settings_export"
             android:text="@string/settings_clear" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
