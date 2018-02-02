@@ -38,6 +38,15 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        final Button dataButton = findViewById(R.id.button_data);
+
+        dataButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent detailIntent = new Intent(context,DataActivity.class);
+                startActivity(detailIntent);
+            }
+        });
+
         final Button settingsButton = findViewById(R.id.button_settings);
 
         settingsButton.setOnClickListener(new View.OnClickListener() {

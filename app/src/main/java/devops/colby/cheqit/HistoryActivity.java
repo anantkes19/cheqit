@@ -11,6 +11,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -108,7 +109,7 @@ public class HistoryActivity extends AppCompatActivity {
 
                 Intent detailIntent = new Intent(context, TransactionDetailActivity.class);
                 JSONObject transactionJSON = selectedTransaction.getJSONObject();
-                detailIntent.putExtra("id",id);
+
                 detailIntent.putExtra("object", transactionJSON.toString()); //Put the whole account into the next view
 
                 startActivityForResult(detailIntent,0);

@@ -24,6 +24,7 @@ public class Transaction implements userObject{
     private Double longitude;
     private boolean expense;
     private String photoUri;
+    private String id;
 
     public String getName() {
         return name;
@@ -123,6 +124,14 @@ public class Transaction implements userObject{
         return dateTime;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String newId) {
+        id = newId;
+    }
+
     public void setAttributes(JSONObject jsonString) throws JSONException {
         this.setName(jsonString.getString("name"));
         this.setTime(jsonString.getString("time"));
@@ -135,6 +144,7 @@ public class Transaction implements userObject{
         this.setIsExpense(jsonString.getBoolean("expense"));
         this.setPhotoUri(jsonString.getString("photo"));
         this.setDate(jsonString.getString("date"));
+        this.setId(jsonString.getString("id"));
     }
 
     public JSONObject getJSONObject() {
@@ -152,6 +162,7 @@ public class Transaction implements userObject{
             obj.put("expense", expense);
             obj.put("photo",photoUri);
             obj.put("date",date);
+            obj.put("id",id);
 
         }
         catch (JSONException e) {

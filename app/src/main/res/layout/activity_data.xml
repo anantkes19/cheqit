@@ -1,9 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="devops.colby.cheqit.DataActivity">
+    <TextView
+        android:id="@+id/data_accounts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Most Used Accounts"
+        android:textSize="15pt"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"/>
+    <LinearLayout
+        android:id="@+id/data_most_spent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/form_item_gap"
+        android:layout_below="@+id/data_accounts"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+        <TextView
+            android:id="@+id/data_most_spent_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14pt"
+            android:layout_gravity="center_vertical"
+            />
+        <TextView
+            android:id="@+id/data_most_spent_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="12pt"
+            />
 
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/data_most_used"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/form_item_gap"
+        android:layout_below="@+id/data_most_spent"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        >
+        <TextView
+            android:id="@+id/data_most_used_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textSize="14pt"/>
+        <TextView
+            android:id="@+id/data_most_used_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="12pt"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/data_most_expensive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/form_item_gap"
+        android:layout_below="@+id/data_most_used"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        >
+        <TextView
+            android:id="@+id/data_most_expensive_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textSize="14pt"/>
+        <TextView
+            android:id="@+id/data_most_expensive_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="12pt"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

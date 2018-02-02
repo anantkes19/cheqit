@@ -39,6 +39,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
     String photoPath ="";
     final Activity activity = this;
     ImageCapture imageCapture;
+    int newId;
 
 
 
@@ -58,7 +59,6 @@ public class TransactionDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transaction_detail);
 
         imageCapture = new ImageCapture(activity, context);
-        final long id = this.getIntent().getExtras().getLong("id");
         JSONObject jsonString = null;
         try {
             jsonString = new JSONObject(this.getIntent().getExtras().getString("object"));
@@ -139,7 +139,17 @@ public class TransactionDetailActivity extends AppCompatActivity {
 
         //Setting Spinner to the account used
         accountUsed.setAdapter(adapter);
-        int spinnerPosition = adapter.getPosition(transaction.getAccount());
+
+        int spinnerPosition=0;
+        System.out.println("Items in adapter");
+        for(int i=0 ; i<adapter.getCount() ; i++){
+            Account acc = (Account) adapter.getItem(i);
+            if(acc.getName().equals(transaction.getAccount())) {
+                spinnerPosition = i;
+            }
+        }
+        
+
         accountUsed.setSelection(spinnerPosition);
 
         //Preparing photo button
@@ -157,28 +167,17 @@ public class TransactionDetailActivity extends AppCompatActivity {
 
 
                 Transaction newTransaction = new Transaction();
-                LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    System.out.println("Permission Granted");
-                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    newTransaction.setLatitude(location.getLatitude());
-                    newTransaction.setLongitude(location.getLongitude());
-
-                } else {
-                    System.out.println("No Permissions granted");
-                    newTransaction.setLatitude(0.00000);
-                    newTransaction.setLongitude(0.00000);
-                }
 
                 newTransaction.setName(nameText.getText().toString());
                 newTransaction.setAmount(Double.parseDouble(amountText.getText().toString()));
                 newTransaction.setTime(String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute()));
                 newTransaction.setComment(commentText.getText().toString());
                 newTransaction.setPhotoUri(photoPath);
-
+                newTransaction.setId(transaction.getId());
                 String dateString = datePicker.getYear() + ":" + datePicker.getMonth() + ":" + datePicker.getDayOfMonth();
                 newTransaction.setDate(dateString);
-
+                newTransaction.setLatitude(transaction.getLatitude());
+                newTransaction.setLongitude(transaction.getLongitude());
 
 
                 RadioButton expenseButton = (RadioButton) findViewById(expenseGroup.getCheckedRadioButtonId());
@@ -198,7 +197,19 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 JsonHandler<Transaction> handler = (JsonHandler)getApplication();
 
                 ArrayList<Transaction> objectList = handler.getJSONObjects("history", Transaction.class);
-                objectList.remove((int)id);
+
+                System.out.println(transaction.getName());
+                for(int i=0; i<objectList.size(); i++) {
+                    System.out.println("--------------------------------------------------------------------------------------------");
+                    System.out.println(objectList.get(i).getName());
+                    System.out.println(objectList.get(i).getId());
+                    if(Long.parseLong(transaction.getId()) == Long.parseLong(objectList.get(i).getId())) {
+                        newId = i;
+                        System.out.println("The Match is: " + i);
+                    }
+                }
+
+                objectList.remove(newId);
                 objectList.add(newTransaction);
                 try {
                     handler.setJSONObjects(objectList,"history");
@@ -247,7 +258,18 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 JsonHandler<Transaction> handler = (JsonHandler)getApplication();
 
                 ArrayList<Transaction> objectList = handler.getJSONObjects("history", Transaction.class);
-                objectList.remove((int)id);
+
+                for(int i=0; i<objectList.size(); i++) {
+                    System.out.println("--------------------------------------------------------------------------------------------");
+                    System.out.println(objectList.get(i).getName());
+                    System.out.println(objectList.get(i).getId());
+                    if(Long.parseLong(transaction.getId()) == Long.parseLong(objectList.get(i).getId())) {
+                        newId = i;
+                        System.out.println("The Match is: " + i);
+                    }
+                }
+
+                objectList.remove(newId);
                 try {
                     handler.setJSONObjects(objectList,"history");
                 } catch (IOException e) {

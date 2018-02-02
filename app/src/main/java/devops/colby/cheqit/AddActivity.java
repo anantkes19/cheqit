@@ -152,6 +152,7 @@ public class AddActivity extends AppCompatActivity {
                 newTransaction.setPhotoUri(mCurrentPhotoPath);
                 newTransaction.setLocation(locationText.getText().toString());
                 newTransaction.setAccount(accountUsed.getSelectedItem().toString());
+                newTransaction.setId(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 
                 String dateString = datePicker.getYear() + ":" + datePicker.getMonth() + ":" + datePicker.getDayOfMonth();
                 newTransaction.setDate(dateString);
