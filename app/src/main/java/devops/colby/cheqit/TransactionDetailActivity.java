@@ -148,7 +148,7 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 spinnerPosition = i;
             }
         }
-        
+
 
         accountUsed.setSelection(spinnerPosition);
 
@@ -200,12 +200,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
 
                 System.out.println(transaction.getName());
                 for(int i=0; i<objectList.size(); i++) {
-                    System.out.println("--------------------------------------------------------------------------------------------");
-                    System.out.println(objectList.get(i).getName());
-                    System.out.println(objectList.get(i).getId());
                     if(Long.parseLong(transaction.getId()) == Long.parseLong(objectList.get(i).getId())) {
                         newId = i;
-                        System.out.println("The Match is: " + i);
                     }
                 }
 
@@ -260,12 +256,8 @@ public class TransactionDetailActivity extends AppCompatActivity {
                 ArrayList<Transaction> objectList = handler.getJSONObjects("history", Transaction.class);
 
                 for(int i=0; i<objectList.size(); i++) {
-                    System.out.println("--------------------------------------------------------------------------------------------");
-                    System.out.println(objectList.get(i).getName());
-                    System.out.println(objectList.get(i).getId());
                     if(Long.parseLong(transaction.getId()) == Long.parseLong(objectList.get(i).getId())) {
                         newId = i;
-                        System.out.println("The Match is: " + i);
                     }
                 }
 

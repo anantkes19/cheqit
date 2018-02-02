@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="devops.colby.cheqit.DataActivity">
+
     <TextView
-        android:id="@+id/data_accounts"
+        android:id="@+id/data_accounts_spent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Most Used Accounts"
+        android:text="Most Money Spent"
         android:textSize="15pt"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"/>
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/form_item_gap"
-        android:layout_below="@+id/data_accounts"
+        android:layout_below="@+id/data_accounts_spent"
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
         <TextView
@@ -39,13 +40,22 @@
             />
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/data_accounts_used"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Most Used Account"
+        android:layout_below="@+id/data_most_spent"
+        android:textSize="15pt"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"/>
     <LinearLayout
         android:id="@+id/data_most_used"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/form_item_gap"
-        android:layout_below="@+id/data_most_spent"
+        android:layout_below="@+id/data_accounts_used"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         >
@@ -64,13 +74,22 @@
             android:textSize="12pt"/>
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/data_expensive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Most Expensive Transaction"
+        android:layout_below="@+id/data_most_used"
+        android:textSize="12pt"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"/>
     <LinearLayout
         android:id="@+id/data_most_expensive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/form_item_gap"
-        android:layout_below="@+id/data_most_used"
+        android:layout_below="@+id/data_expensive"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         >
@@ -89,5 +108,15 @@
             android:textSize="12pt"/>
 
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/data_most_expensive"
+        tools:context=".MapsActivity" />
 
 </RelativeLayout>

@@ -49,6 +49,9 @@
         <activity android:name=".TransactionDetailActivity" />
         <activity android:name=".ZoomedImageActivity" />
         <activity android:name=".DataActivity" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCgmBVmkuCv0U7DAyWsG0qJzmaXMfDpt7A"/>
     </application>
 
 </manifest>

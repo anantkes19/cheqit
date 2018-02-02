@@ -13,12 +13,14 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,10 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -46,13 +52,16 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class AddActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     final Context context = this;
     final Activity activity = this;
     static final int REQUEST_TAKE_PHOTO = 1;
     ImageCapture imageCapture;
     ImageView image;
-
+    Location mLastLocation;
+    GoogleApiClient mGoogleApiClient;
+    double lat;
+    double lng;
     private boolean userAcknowledged = false;
     String mCurrentPhotoPath = "";
 
@@ -65,16 +74,49 @@ public class AddActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            lat = mLastLocation.getLatitude();
+            lng = mLastLocation.getLongitude();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        return;
+    }
+
     public void showInputMethod() {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         assert imm != null;
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
         final Button submitButton = findViewById(R.id.button_submit);
         final EditText nameText = findViewById(R.id.nameText);
         final EditText amountText = findViewById(R.id.amountText);
@@ -92,13 +134,11 @@ public class AddActivity extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent detailIntent = new Intent(context,ZoomedImageActivity.class);
-                detailIntent.putExtra("photo",mCurrentPhotoPath);
+                Intent detailIntent = new Intent(context, ZoomedImageActivity.class);
+                detailIntent.putExtra("photo", mCurrentPhotoPath);
                 startActivity(detailIntent);
             }
         });
-
-
 
 
         //Bring up keyboard on activity start
@@ -131,6 +171,7 @@ public class AddActivity extends AppCompatActivity {
                 Transaction newTransaction = new Transaction();
 
                 //Attempt to get coordinates of user
+                /*
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     System.out.println("Permission Granted");
@@ -142,7 +183,9 @@ public class AddActivity extends AppCompatActivity {
                     System.out.println("No Permissions granted");
                     newTransaction.setLatitude(0.00000);
                     newTransaction.setLongitude(0.00000);
-                }
+                }*/
+
+
 
                 //Setting attributes of transaction
                 newTransaction.setName(nameText.getText().toString());
@@ -153,6 +196,8 @@ public class AddActivity extends AppCompatActivity {
                 newTransaction.setLocation(locationText.getText().toString());
                 newTransaction.setAccount(accountUsed.getSelectedItem().toString());
                 newTransaction.setId(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+                newTransaction.setLatitude(lat);
+                newTransaction.setLongitude(lng);
 
                 String dateString = datePicker.getYear() + ":" + datePicker.getMonth() + ":" + datePicker.getDayOfMonth();
                 newTransaction.setDate(dateString);
@@ -241,4 +286,8 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }
