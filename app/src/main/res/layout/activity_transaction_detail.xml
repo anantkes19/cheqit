@@ -1,169 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="devops.colby.cheqit.TransactionDetailActivity">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/RelativeLayout01"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        xmlns:android="http://schemas.android.com/apk/res/android">
 
         <TextView
             android:id="@+id/edit_titleText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"
-            android:text="@string/edit_title"
+            android:paddingBottom="5dp"
+            android:textColor="@android:color/primary_text_dark"
+            android:background="@color/colorPrimary"
+            android:paddingTop="@dimen/form_item_gap"
+            android:textSize="24sp"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:text="@string/edit_title" />
 
-        <EditText
-            android:id="@+id/edit_nameText"
+        <RelativeLayout
+            android:id="@+id/RelativeLayout01"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="80dp"
-            android:hint="@string/add_name"
-            android:inputType="textCapSentences|textAutoCorrect"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            xmlns:android="http://schemas.android.com/apk/res/android">
 
-            />
-
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/LinearLayout01"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_nameText"
-
-
-            android:layout_marginTop="@dimen/form_item_gap">
-
-            <RadioGroup
-                android:id="@+id/edit_radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0">
-
-                <RadioButton
-                    android:id="@+id/edit_radioExpense"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/radio_expense" />
-
-                <RadioButton
-                    android:id="@+id/edit_radioIncome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/radio_income" />
-
-
-            </RadioGroup>
-
-            <Spinner
-                android:id="@+id/edit_accountSelection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown" />
 
 
             <EditText
-                android:id="@+id/edit_amountText"
+                android:id="@+id/edit_nameText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/form_item_gap"
+                android:hint="@string/add_name"
+                android:inputType="textCapSentences|textAutoCorrect"
+
+                />
+
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/LinearLayout01"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_nameText"
+
+
+                android:layout_marginTop="@dimen/form_item_gap">
+
+                <RadioGroup
+                    android:id="@+id/edit_radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0">
+
+                    <RadioButton
+                        android:id="@+id/edit_radioExpense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/radio_expense" />
+
+                    <RadioButton
+                        android:id="@+id/edit_radioIncome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/radio_income" />
+
+
+                </RadioGroup>
+
+                <Spinner
+                    android:id="@+id/edit_accountSelection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:spinnerMode="dropdown" />
+
+
+                <EditText
+                    android:id="@+id/edit_amountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="4"
+                    android:hint="@string/add_amount"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/edit_locationText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/LinearLayout01"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/form_item_gap"
+                android:hint="@string/add_location"
+                android:inputType="textCapSentences|textAutoCorrect" />
+
+            <TimePicker
+                android:id="@+id/edit_timeText"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/edit_locationText"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/form_item_gap"
+                android:timePickerMode="spinner" />
+            <DatePicker
+                android:id="@+id/edit_datePicker"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_timeText"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/form_item_gap"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+                />
+
+            <Button
+                android:id="@+id/edit_photo_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_datePicker"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/form_item_gap"
+                android:text="@string/add_photo" />
+
+            <ImageView
+                android:id="@+id/edit_photo_image"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_photo_button"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/form_item_gap"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:maxHeight="200dp" />
+
+            <EditText
+                android:id="@+id/edit_commentText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_photo_image"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/form_item_gap"
+                android:hint="@string/add_comment"
+                android:inputType="textCapSentences|textAutoCorrect" />
+
+            <Button
+                android:id="@+id/edit_button_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="4"
-                android:hint="@string/add_amount"
-                android:inputType="numberDecimal" />
-        </LinearLayout>
+                android:layout_below="@+id/edit_commentText"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/form_item_gap"
+                android:text="@string/edit_submit" />
 
-
-        <EditText
-            android:id="@+id/edit_locationText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/LinearLayout01"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/form_item_gap"
-            android:hint="@string/add_location"
-            android:inputType="textPersonName" />
-
-        <TimePicker
-            android:id="@+id/edit_timeText"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/edit_locationText"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/form_item_gap"
-            android:timePickerMode="spinner" />
-        <DatePicker
-            android:id="@+id/edit_datePicker"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_timeText"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/form_item_gap"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"
-            />
-
-        <Button
-            android:id="@+id/edit_photo_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_datePicker"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/form_item_gap"
-            android:text="@string/add_photo" />
-
-        <ImageView
-            android:id="@+id/edit_photo_image"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_photo_button"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/form_item_gap"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:maxHeight="200dp" />
-
-        <EditText
-            android:id="@+id/edit_commentText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_photo_image"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/form_item_gap"
-            android:hint="@string/add_comment"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/edit_button_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_commentText"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/form_item_gap"
-            android:text="@string/edit_submit" />
-
-        <Button
-            android:id="@+id/edit_button_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/edit_button_submit"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"
-            android:text="@string/edit_delete"
-            android:textColor="@color/red" />
-    </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+            <Button
+                android:id="@+id/edit_button_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_button_submit"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:text="@string/edit_delete"
+                android:textColor="@color/red" />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
