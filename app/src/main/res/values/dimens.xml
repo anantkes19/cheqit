@@ -6,4 +6,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="form_item_gap">10dp</dimen>
+    <dimen name="header_top">10dp</dimen>
+    <dimen name="header_bottom">10dp</dimen>
+    <dimen name="header_font">34sp</dimen>
+
 </resources>

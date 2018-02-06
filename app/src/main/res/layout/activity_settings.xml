@@ -16,12 +16,12 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_alignParentTop="true"
-            android:textSize="34sp"
             android:text="@string/settings_title"
-            android:paddingBottom="5dp"
             android:textColor="@android:color/primary_text_dark"
             android:background="@color/colorPrimary"
-            android:paddingTop="@dimen/form_item_gap"
+            android:paddingBottom="@dimen/header_bottom"
+            android:paddingTop="@dimen/header_top"
+            android:textSize="@dimen/header_font"
             android:textAlignment="center"/>
         <View
             android:layout_width="match_parent"

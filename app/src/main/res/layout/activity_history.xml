@@ -15,12 +15,12 @@
             android:id="@+id/past_title"
             android:layout_height="wrap_content"
             android:text="@string/list_transactions_title"
-            android:textSize="30sp"
             android:paddingStart="5dp"
-            android:paddingBottom="5dp"
+            android:paddingBottom="@dimen/header_bottom"
+            android:paddingTop="@dimen/header_top"
+            android:textSize="@dimen/header_font"
             android:textColor="@android:color/primary_text_dark"
             android:background="@color/colorPrimary"
-            android:paddingTop="@dimen/form_item_gap"
             android:layout_width="match_parent" />
 
         <SearchView

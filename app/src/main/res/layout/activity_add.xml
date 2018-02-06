@@ -13,11 +13,11 @@
             android:id="@+id/titleText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
             android:textColor="@android:color/primary_text_dark"
             android:background="@color/colorPrimary"
-            android:paddingTop="@dimen/form_item_gap"
-            android:textSize="24sp"
+            android:paddingBottom="@dimen/header_bottom"
+            android:paddingTop="@dimen/header_top"
+            android:textSize="@dimen/header_font"
             android:textAlignment="center"
             android:text="@string/add_title" />
 
