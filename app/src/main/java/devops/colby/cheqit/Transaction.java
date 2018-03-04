@@ -5,14 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
-import java.util.Date;
 
 
 /**
  * Created by Austin Nantkes on 1/13/2018.
  */
 
-public class Transaction implements userObject{
+public class Transaction implements SavedDataInterface {
     private String name;
     private String time;
     private String date;

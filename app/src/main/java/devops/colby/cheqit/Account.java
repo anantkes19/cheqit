@@ -7,7 +7,7 @@ import org.json.JSONObject;
  * Created by bybsn on 1/18/2018.
  */
 
-public class Account implements userObject{
+public class Account implements SavedDataInterface {
     private String name;
     private String comment;
     private double amount; //Current amount in Account

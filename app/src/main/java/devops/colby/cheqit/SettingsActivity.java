@@ -2,11 +2,10 @@ package devops.colby.cheqit;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.opencsv.CSVWriter;
@@ -14,7 +13,6 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -80,7 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         accountsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent detailIntent = new Intent(context,ListAccounts.class);
+                Intent detailIntent = new Intent(context,AccountList.class);
                 startActivity(detailIntent);
             }
         });
@@ -89,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent detailIntent = new Intent(context,AddAccountActivity.class);
+                Intent detailIntent = new Intent(context,AccountAddActivity.class);
                 startActivity(detailIntent);
             }
         });
@@ -98,7 +96,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         exportButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("Button Pressed");
                 try {
                     createCSV();
                 } catch (IOException e) {

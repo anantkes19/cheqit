@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="devops.colby.cheqit.AddAccountActivity">
+    tools:context="devops.colby.cheqit.AccountAddActivity">
     <RelativeLayout android:id="@+id/RelativeLayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

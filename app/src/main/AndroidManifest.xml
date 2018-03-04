@@ -29,11 +29,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".AddActivity" />
+        <activity android:name=".TransactionHistoryActivity" />
+        <activity android:name=".TransactionAddActivity" />
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".ListAccounts" />
-        <activity android:name=".AddAccountActivity" />
+        <activity android:name=".AccountList" />
+        <activity android:name=".AccountAddActivity" />
         <activity android:name=".AccountDetailActivity" />
 
         <provider

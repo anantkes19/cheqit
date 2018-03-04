@@ -1,20 +1,16 @@
 package devops.colby.cheqit;
 
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
@@ -25,17 +21,11 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class DataActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -107,6 +97,7 @@ public class DataActivity extends FragmentActivity implements OnMapReadyCallback
             graphData.add(new ArrayList<Double>());
         }
 
+        //Graph for expenses in the past month
         for(int i = 0; i<graphTransactionList.size(); i++) {
             if(graphTransactionList.get(i).getDateTime().before(now) && graphTransactionList.get(i).getDateTime().after(calendar) && graphTransactionList.get(i).getIsExpense()) {
                 System.out.println("####### Transaction Found for Graph");
@@ -116,6 +107,8 @@ public class DataActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         }
+
+        //Sum for each day
         sum = 0;
         for(int day = 29; day >= 0; day--) {
 

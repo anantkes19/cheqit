@@ -6,7 +6,6 @@ import android.content.Context;
 import org.json.JSONArray;
 
 import java.io.FileInputStream;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  * Created by bybsn on 1/17/2018.
  */
 
-public class JsonHandler<T extends userObject> extends Application {
+public class JsonHandler<T extends SavedDataInterface> extends Application {
 
     public ArrayList<T> getJSONObjects(String filename, Class<T> classToLoad){
         final ArrayList<T> objectList = new ArrayList<>();

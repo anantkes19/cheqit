@@ -2,9 +2,8 @@ package devops.colby.cheqit;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.JsonWriter;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,14 +12,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ListAccounts extends AppCompatActivity {
+public class AccountList extends AppCompatActivity {
     private void loadAccounts() {
         JsonHandler<Account> handler = (JsonHandler)getApplication();
         final ArrayList<Account> accountList = handler.getJSONObjects("accounts", Account.class);
 
         final ListView accounts = findViewById(R.id.account_list_view);
-        System.out.println("Loaded Accounts!");
-        System.out.println(accountList);
+        //System.out.println("Loaded Accounts!");
+        //System.out.println(accountList);
 
         AccountAdapter adapter = new AccountAdapter(this, accountList);
         accounts.setAdapter(adapter);

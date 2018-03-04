@@ -7,7 +7,7 @@ import org.json.JSONObject;
  * Created by bybsn on 1/20/2018.
  */
 
-public interface userObject {
+public interface SavedDataInterface {
     void setAttributes (JSONObject jsonString) throws JSONException;
     Object getJSONObject();
 }

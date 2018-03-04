@@ -5,17 +5,15 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -26,35 +24,34 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 
-public class AddActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    final Context context = this;
-    final Activity activity = this;
-    static final int REQUEST_TAKE_PHOTO = 1;
-    ImageCapture imageCapture;
-    ImageView image;
-    Location mLastLocation;
-    GoogleApiClient mGoogleApiClient;
-    double lat;
-    double lng;
+public class TransactionAddActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+    private final Context context = this;
+    private final Activity activity = this;
+    private static final int REQUEST_TAKE_PHOTO = 1;
+    private ImageCapture imageCapture;
+    private ImageView image;
+    private Location mLastLocation;
+    private GoogleApiClient mGoogleApiClient;
+    private double lat;
+    private double lng;
     private boolean userAcknowledged = false;
-    String mCurrentPhotoPath = "";
+    private String mCurrentPhotoPath = "";
+    private boolean permissionsEnabled = false;
+
+    Button takePhoto;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -88,6 +85,7 @@ public class AddActivity extends AppCompatActivity implements GoogleApiClient.Co
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if(requestCode==225 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
+            permissionsEnabled = true;
             System.out.println("Permission Granted and used");
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
@@ -95,6 +93,9 @@ public class AddActivity extends AppCompatActivity implements GoogleApiClient.Co
                 lat = mLastLocation.getLatitude();
                 lng = mLastLocation.getLongitude();
             }
+        } else {
+            Toast.makeText(context, "Disabling Photos and Location Saving", Toast.LENGTH_LONG).show();
+            takePhoto.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -129,7 +130,7 @@ public class AddActivity extends AppCompatActivity implements GoogleApiClient.Co
         final EditText locationText = findViewById(R.id.locationText);
         final Spinner accountUsed = findViewById(R.id.accountSelection);
         final RadioGroup expenseGroup = findViewById(R.id.radioGroup);
-        final Button takePhoto = findViewById(R.id.photo_button);
+        takePhoto = findViewById(R.id.photo_button);
         final DatePicker datePicker = findViewById(R.id.dateText);
 
         image = findViewById(R.id.photo_image);
@@ -174,22 +175,6 @@ public class AddActivity extends AppCompatActivity implements GoogleApiClient.Co
 
                 Transaction newTransaction = new Transaction();
 
-                //Attempt to get coordinates of user
-                /*
-                LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    System.out.println("Permission Granted");
-                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    newTransaction.setLatitude(location.getLatitude());
-                    newTransaction.setLongitude(location.getLongitude());
-
-                } else {
-                    System.out.println("No Permissions granted");
-                    newTransaction.setLatitude(0.00000);
-                    newTransaction.setLongitude(0.00000);
-                }*/
-
-
 
                 //Setting attributes of transaction
                 newTransaction.setName(nameText.getText().toString());
@@ -200,23 +185,29 @@ public class AddActivity extends AppCompatActivity implements GoogleApiClient.Co
                 newTransaction.setLocation(locationText.getText().toString());
                 newTransaction.setAccount(accountUsed.getSelectedItem().toString());
                 newTransaction.setId(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+
+                //Setting Latitude Longitude based on permissions
+                if(!permissionsEnabled) {
+                    lat = 0.0;
+                    lng = 0.0;
+                }
                 newTransaction.setLatitude(lat);
                 newTransaction.setLongitude(lng);
 
                 String dateString = datePicker.getYear() + ":" + datePicker.getMonth() + ":" + datePicker.getDayOfMonth();
                 newTransaction.setDate(dateString);
 
-                System.out.println("Photo Path: "+mCurrentPhotoPath);
+                //System.out.println("Photo Path: "+mCurrentPhotoPath);
 
                 RadioButton expenseButton = (RadioButton) findViewById(expenseGroup.getCheckedRadioButtonId());
 
                 boolean expense = true;
-                System.out.println(expenseButton.getText());
+                //System.out.println(expenseButton.getText());
                 if(expenseButton.getText().equals("Income")) {
-                    System.out.println("Is Income");
+                    //System.out.println("Is Income");
                     expense = false;
                 }
-                System.out.println(expense);
+                //System.out.println(expense);
                 newTransaction.setIsExpense(expense);
 
 
@@ -263,16 +254,17 @@ public class AddActivity extends AppCompatActivity implements GoogleApiClient.Co
                 //Updating the amount of an account and saving the file
                 JsonHandler<Account> handlerAccount = (JsonHandler)getApplication();
 
+                //If it's income we add money to the selected account
                 if(!expense) {
                     selectedAccount.setAmount(selectedAccount.getAmount() + newTransaction.getAmount());
-                } else {
+                } else { //Else we remove money, increment the amount spent and times used.
 
                     selectedAccount.setAmount(selectedAccount.getAmount() - newTransaction.getAmount());
                     selectedAccount.setTotalSpent(selectedAccount.getTotalSpent() + newTransaction.getAmount());
                     selectedAccount.setTimesUsed(selectedAccount.getTimesUsed() + 1);
                 }
 
-                accountList.remove((int)accountUsed.getSelectedItemId());
+                accountList.remove((int)accountUsed.getSelectedItemId()); //Here we have to remove the account and resave it
                 accountList.add(selectedAccount);
 
                 try {

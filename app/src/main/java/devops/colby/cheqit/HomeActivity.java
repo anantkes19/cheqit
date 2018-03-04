@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
@@ -22,9 +25,26 @@ public class HomeActivity extends AppCompatActivity {
 
         final Button historyButton = findViewById(R.id.button_history);
 
+
+        try {
+            FileInputStream fis = openFileInput("accounts");
+            JsonHandler<Account> handlerAccount = (JsonHandler)getApplication();
+            final ArrayList<Account> accountList = handlerAccount.getJSONObjects("accounts", Account.class);
+            if(accountList.size()==0) {
+                Toast.makeText(this, "Please create an account", Toast.LENGTH_LONG).show();
+                Intent detailIntent = new Intent(context,AccountAddActivity.class);
+                startActivity(detailIntent);
+            }
+
+        } catch (FileNotFoundException e) {
+            Toast.makeText(this, "Please create an account", Toast.LENGTH_LONG).show();
+            Intent detailIntent = new Intent(context,AccountAddActivity.class);
+            startActivity(detailIntent);
+        }
+
         historyButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent detailIntent = new Intent(context,HistoryActivity.class);
+                Intent detailIntent = new Intent(context,TransactionHistoryActivity.class);
                 startActivity(detailIntent);
             }
         });
@@ -33,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
 
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent detailIntent = new Intent(context,AddActivity.class);
+                Intent detailIntent = new Intent(context,TransactionAddActivity.class);
                 startActivity(detailIntent);
             }
         });
