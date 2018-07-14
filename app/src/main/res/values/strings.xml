@@ -31,4 +31,9 @@
     <string name="list_transactions_title">Past Transactions</string>
     <string name="export_transactions">Export Transactions</string>
     <string name="add_settings_title">Add Account</string>
+    <string name="title_activity_main_screen">Test Data</string>
+    <string name="main_add">Add</string>
+    <string name="main_history">History</string>
+    <string name="main_data">Data</string>
+    <string name="title_overview">Overview</string>
 </resources>

@@ -21,13 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".HomeActivity"
+            android:name=".MainScreen"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_main_screen">
+
         </activity>
         <activity android:name=".TransactionHistoryActivity" />
         <activity android:name=".TransactionAddActivity" />
@@ -49,9 +54,12 @@
         <activity android:name=".TransactionDetailActivity" />
         <activity android:name=".ZoomedImageActivity" />
         <activity android:name=".DataActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCgmBVmkuCv0U7DAyWsG0qJzmaXMfDpt7A"/>
+            android:value="AIzaSyCgmBVmkuCv0U7DAyWsG0qJzmaXMfDpt7A" />
+
+
     </application>
 
 </manifest>

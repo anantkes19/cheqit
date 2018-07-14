@@ -1,8 +1,14 @@
 package devops.colby.cheqit;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +26,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONException;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -36,6 +44,66 @@ public class DataActivity extends FragmentActivity implements OnMapReadyCallback
     HeatmapTileProvider mProvider;
     TileOverlay mOverlay;
     double sum;
+    final Context context = this;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_add:
+                    Intent detailIntent = new Intent(context, TransactionAddActivity.class);
+                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(detailIntent);
+
+                    return true;
+                case R.id.navigation_history:
+                    detailIntent = new Intent(context, TransactionHistoryActivity.class);
+                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(detailIntent);
+
+                    return true;
+                case R.id.navigation_data:
+                    detailIntent = new Intent(context, DataActivity.class);
+                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(detailIntent);
+
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    protected void bottomMenu() {
+        try {
+            FileInputStream fis = openFileInput("accounts"); //Never used, but if accounts file doesnt exist,
+            //Exception will help fix that
+            JsonHandler<Account> handlerAccount = (JsonHandler) getApplication();
+            final ArrayList<Account> accountList = handlerAccount.getJSONObjects("accounts", Account.class);
+            if (accountList.size() == 0) {
+                Toast.makeText(this, "Please create an account", Toast.LENGTH_LONG).show();
+                Intent detailIntent = new Intent(context, AccountAddActivity.class);
+                detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(detailIntent);
+            }
+
+        } catch (FileNotFoundException e) {
+            Toast.makeText(this, "Please create an account", Toast.LENGTH_LONG).show();
+            Intent detailIntent = new Intent(context, AccountAddActivity.class);
+            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(detailIntent);
+        }
+
+
+
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(3);
+        menuItem.setChecked(true);
+    }
 
 
     public LineGraphSeries<DataPoint> getGraphData() {
@@ -146,7 +214,7 @@ public class DataActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
-
+        bottomMenu();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

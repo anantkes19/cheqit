@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Cheqit.iml" filepath="$PROJECT_DIR$/Cheqit.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cheqit.iml" filepath="$PROJECT_DIR$/cheqit.iml" />
     </modules>
   </component>
 </project>

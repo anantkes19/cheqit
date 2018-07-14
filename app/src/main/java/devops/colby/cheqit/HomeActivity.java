@@ -54,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent detailIntent = new Intent(context,TransactionAddActivity.class);
+                detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(detailIntent);
             }
         });

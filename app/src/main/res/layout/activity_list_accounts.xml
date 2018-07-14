@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/list_account_title"
-        android:textSize="30sp"
+        android:textSize="@dimen/header_font"
         android:paddingBottom="5dp"
         android:textColor="@android:color/primary_text_dark"
         android:background="@color/colorPrimary"

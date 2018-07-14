@@ -218,4 +218,5 @@
             android:layout_below="@+id/data_data_all"/>
 
     </RelativeLayout>
+
 </android.support.v4.widget.NestedScrollView>

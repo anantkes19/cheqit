@@ -5,6 +5,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +14,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -31,13 +36,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
-public class TransactionAddActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class TransactionAddActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
     private final Context context = this;
     private final Activity activity = this;
     private static final int REQUEST_TAKE_PHOTO = 1;
@@ -51,7 +59,71 @@ public class TransactionAddActivity extends AppCompatActivity implements GoogleA
     private String mCurrentPhotoPath = "";
     private boolean permissionsEnabled = false;
 
+    Button btnDatePicker, btnTimePicker;
+    EditText txtDate, txtTime;
+    private int mYear, mMonth, mDay, mHour, mMinute;
+
+
     Button takePhoto;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_add:
+                    Intent detailIntent = new Intent(context, TransactionAddActivity.class);
+                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(detailIntent);
+
+                    return true;
+                case R.id.navigation_history:
+                    detailIntent = new Intent(context, TransactionHistoryActivity.class);
+                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(detailIntent);
+
+                    return true;
+                case R.id.navigation_data:
+                    detailIntent = new Intent(context, DataActivity.class);
+                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(detailIntent);
+
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    protected void bottomMenu() {
+        try {
+            FileInputStream fis = openFileInput("accounts"); //Never used, but if accounts file doesnt exist,
+            //Exception will help fix that
+            JsonHandler<Account> handlerAccount = (JsonHandler) getApplication();
+            final ArrayList<Account> accountList = handlerAccount.getJSONObjects("accounts", Account.class);
+            if (accountList.size() == 0) {
+                Toast.makeText(this, "Please create an account", Toast.LENGTH_LONG).show();
+                Intent detailIntent = new Intent(context, AccountAddActivity.class);
+                detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(detailIntent);
+            }
+
+        } catch (FileNotFoundException e) {
+            Toast.makeText(this, "Please create an account", Toast.LENGTH_LONG).show();
+            Intent detailIntent = new Intent(context, AccountAddActivity.class);
+            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(detailIntent);
+        }
+
+
+
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -112,9 +184,61 @@ public class TransactionAddActivity extends AppCompatActivity implements GoogleA
     }
 
     @Override
+    public void onClick(View v) {
+
+        if (v == btnDatePicker) {
+
+            // Get Current Date
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+
+                            txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                        }
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
+        }
+        if (v == btnTimePicker) {
+
+            // Get Current Time
+            final Calendar c = Calendar.getInstance();
+            mHour = c.get(Calendar.HOUR_OF_DAY);
+            mMinute = c.get(Calendar.MINUTE);
+
+            // Launch Time Picker Dialog
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                    new TimePickerDialog.OnTimeSetListener() {
+
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay,
+                                              int minute) {
+
+                            txtTime.setText(hourOfDay + ":" + minute);
+                        }
+                    }, mHour, mMinute, false);
+            timePickerDialog.show();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        bottomMenu();
+
+
+
 
         mGoogleApiClient = new GoogleApiClient.Builder(context)
                 .addConnectionCallbacks(this)
@@ -125,13 +249,41 @@ public class TransactionAddActivity extends AppCompatActivity implements GoogleA
         final Button submitButton = findViewById(R.id.button_submit);
         final EditText nameText = findViewById(R.id.nameText);
         final EditText amountText = findViewById(R.id.amountText);
-        final TimePicker timePicker = findViewById(R.id.timeText);
+
         final EditText commentText = findViewById(R.id.commentText);
         final EditText locationText = findViewById(R.id.locationText);
         final Spinner accountUsed = findViewById(R.id.accountSelection);
         final RadioGroup expenseGroup = findViewById(R.id.radioGroup);
         takePhoto = findViewById(R.id.photo_button);
-        final DatePicker datePicker = findViewById(R.id.dateText);
+
+        btnDatePicker=(Button)findViewById(R.id.btn_date);
+        btnTimePicker=(Button)findViewById(R.id.btn_time);
+        txtDate=(EditText)findViewById(R.id.in_date);
+        txtTime=(EditText)findViewById(R.id.in_time);
+
+
+        //Special thanks to : https://www.journaldev.com/9976/android-date-time-picker-dialog
+        //For the help with time and date pop up dialogs
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        String date = mDay + "-" + (mMonth + 1) + "-" + mYear;
+        txtDate.setText(date);
+        String time = mHour + ":" + mMinute;
+        txtTime.setText(time);
+
+        btnDatePicker.setOnClickListener(this);
+        btnTimePicker.setOnClickListener(this);
+
+        /*final TimePicker timePicker = findViewById(R.id.timeText);
+        final DatePicker datePicker = findViewById(R.id.dateText);*/
+
+
 
         image = findViewById(R.id.photo_image);
 
@@ -179,7 +331,7 @@ public class TransactionAddActivity extends AppCompatActivity implements GoogleA
                 //Setting attributes of transaction
                 newTransaction.setName(nameText.getText().toString());
                 newTransaction.setAmount(Double.parseDouble(amountText.getText().toString()));
-                newTransaction.setTime(String.valueOf(timePicker.getHour()) + ":" +String.valueOf(timePicker.getMinute()));
+                newTransaction.setTime(String.valueOf(mHour + ":" +mMinute));
                 newTransaction.setComment(commentText.getText().toString());
                 newTransaction.setPhotoUri(mCurrentPhotoPath);
                 newTransaction.setLocation(locationText.getText().toString());
@@ -194,7 +346,7 @@ public class TransactionAddActivity extends AppCompatActivity implements GoogleA
                 newTransaction.setLatitude(lat);
                 newTransaction.setLongitude(lng);
 
-                String dateString = datePicker.getYear() + ":" + datePicker.getMonth() + ":" + datePicker.getDayOfMonth();
+                String dateString = mYear + ":" + mMonth + ":" + mDay;
                 newTransaction.setDate(dateString);
 
                 //System.out.println("Photo Path: "+mCurrentPhotoPath);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_overview"
+        android:icon="@drawable/ic_account_balance_black_24dp"
+        android:color="@color/colorPrimary"
+        android:title="@string/title_overview" />
+    <item
+        android:id="@+id/navigation_add"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:color="@color/colorPrimary"
+        android:title="@string/title_add" />
+
+    <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/ic_list_black_24dp"
+        android:color="@color/colorPrimary"
+        android:title="@string/title_history" />
+
+    <item
+        android:id="@+id/navigation_data"
+        android:icon="@drawable/ic_equalizer_black_24dp"
+        android:color="@color/colorPrimary"
+        android:title="@string/title_data" />
+
+</menu>
