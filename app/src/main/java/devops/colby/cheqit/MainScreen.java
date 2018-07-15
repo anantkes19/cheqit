@@ -55,6 +55,11 @@ public class MainScreen extends AppCompatActivity {
 
         return false;
     };
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
     protected void bottomMenu() {
         try {
             FileInputStream fis = openFileInput("accounts"); //Never used, but if accounts file doesnt exist,

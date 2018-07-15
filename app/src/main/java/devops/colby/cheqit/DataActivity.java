@@ -79,6 +79,11 @@ public class DataActivity extends FragmentActivity implements OnMapReadyCallback
 
         return false;
     };
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
 
     protected void bottomMenu() {
         try {

@@ -14,6 +14,13 @@ import java.util.ArrayList;
 
 public class AccountAddActivity extends AppCompatActivity {
     final Context context = this;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -32,37 +32,43 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     ArrayList<Transaction> transactionList;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-                final Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    switch (item.getItemId()) {
-                        case R.id.navigation_add:
-                            Intent detailIntent = new Intent(context, TransactionAddActivity.class);
-                            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(detailIntent);
-                            break;
-                        case R.id.navigation_overview:
-                            detailIntent = new Intent(context, MainScreen.class);
-                            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(detailIntent);
-                            break;
-                        case R.id.navigation_history:
-                            detailIntent = new Intent(context, TransactionHistoryActivity.class);
-                            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(detailIntent);
-                            break;
-                        case R.id.navigation_data:
-                            detailIntent = new Intent(context, DataActivity.class);
-                            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            startActivity(detailIntent);
-                            break;
-                    }
-                }, 100);
+        = item -> {
+            final Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_add:
+                        Intent detailIntent = new Intent(context, TransactionAddActivity.class);
+                        detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(detailIntent);
+                        break;
+                    case R.id.navigation_overview:
+                        detailIntent = new Intent(context, MainScreen.class);
+                        detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(detailIntent);
+                        break;
+                    case R.id.navigation_history:
+                        detailIntent = new Intent(context, TransactionHistoryActivity.class);
+                        detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(detailIntent);
+                        break;
+                    case R.id.navigation_data:
+                        detailIntent = new Intent(context, DataActivity.class);
+                        detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(detailIntent);
+                        break;
+                }
+            }, 100);
 
 
 
-                return false;
-            };
+            return false;
+        };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, 0);
+    }
 
     protected void bottomMenu() {
         try {
