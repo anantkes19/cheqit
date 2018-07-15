@@ -3,6 +3,7 @@ package devops.colby.cheqit;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -31,33 +32,37 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     ArrayList<Transaction> transactionList;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            = item -> {
+                final Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_add:
+                            Intent detailIntent = new Intent(context, TransactionAddActivity.class);
+                            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(detailIntent);
+                            break;
+                        case R.id.navigation_overview:
+                            detailIntent = new Intent(context, MainScreen.class);
+                            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(detailIntent);
+                            break;
+                        case R.id.navigation_history:
+                            detailIntent = new Intent(context, TransactionHistoryActivity.class);
+                            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(detailIntent);
+                            break;
+                        case R.id.navigation_data:
+                            detailIntent = new Intent(context, DataActivity.class);
+                            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(detailIntent);
+                            break;
+                    }
+                }, 100);
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_add:
-                    Intent detailIntent = new Intent(context, TransactionAddActivity.class);
-                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(detailIntent);
 
-                    return true;
-                case R.id.navigation_history:
-                    detailIntent = new Intent(context, TransactionHistoryActivity.class);
-                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(detailIntent);
 
-                    return true;
-                case R.id.navigation_data:
-                    detailIntent = new Intent(context, DataActivity.class);
-                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(detailIntent);
-
-                    return true;
-            }
-            return false;
-        }
-    };
+                return false;
+            };
 
     protected void bottomMenu() {
         try {

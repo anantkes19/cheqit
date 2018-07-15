@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -67,34 +68,37 @@ public class TransactionAddActivity extends AppCompatActivity implements GoogleA
     Button takePhoto;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            = item -> {
+        final Handler handler = new Handler();
+        handler.postDelayed(() -> {
             switch (item.getItemId()) {
                 case R.id.navigation_add:
                     Intent detailIntent = new Intent(context, TransactionAddActivity.class);
                     detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(detailIntent);
-
-                    return true;
+                    break;
+                case R.id.navigation_overview:
+                    detailIntent = new Intent(context, MainScreen.class);
+                    detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(detailIntent);
+                    break;
                 case R.id.navigation_history:
                     detailIntent = new Intent(context, TransactionHistoryActivity.class);
                     detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(detailIntent);
-
-                    return true;
+                    break;
                 case R.id.navigation_data:
                     detailIntent = new Intent(context, DataActivity.class);
                     detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(detailIntent);
-
-                    return true;
+                    break;
             }
-            return false;
-        }
-    };
+        }, 100);
 
+
+
+        return false;
+    };
     protected void bottomMenu() {
         try {
             FileInputStream fis = openFileInput("accounts"); //Never used, but if accounts file doesnt exist,
@@ -427,7 +431,9 @@ public class TransactionAddActivity extends AppCompatActivity implements GoogleA
 
                 Toast.makeText(context, "Transaction Added", Toast.LENGTH_LONG).show();
                 //End current activity
-                finish();
+                Intent detailIntent = new Intent(context, MainScreen.class);
+                detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(detailIntent);
             }
         });
 

@@ -1,5 +1,7 @@
 package devops.colby.cheqit;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AccountAddActivity extends AppCompatActivity {
-
+    final Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +64,9 @@ public class AccountAddActivity extends AppCompatActivity {
 
                 //End current activity
                 Toast.makeText(getApplicationContext(), "Account Added", Toast.LENGTH_LONG).show();
-                finish();
+                Intent detailIntent = new Intent(context, TransactionAddActivity.class);
+                detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(detailIntent);
             }
         });
     }

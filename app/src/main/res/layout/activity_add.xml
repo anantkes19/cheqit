@@ -85,21 +85,19 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="fill_parent"
                         android:orientation="vertical"
                         android:layout_weight="1">
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="8dp"
-                            android:fontFamily="Roboto Regular"
-                            android:textSize="12sp"
-                            android:text="Account"/>
+                            android:text="Account"
+                            style="@style/InputLabel" />
                         <Spinner
                             android:id="@+id/accountSelection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
                             android:spinnerMode="dropdown"
                             />
 
@@ -109,12 +107,12 @@
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/amountText_float"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         android:layout_weight="1">
                         <EditText
                             android:id="@+id/amountText"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="fill_parent"
                             android:inputType="numberDecimal"
                             android:hint="@string/add_amount" />
                     </android.support.design.widget.TextInputLayout>
@@ -124,6 +122,7 @@
                 android:id="@+id/radioGroup"
                 android:layout_below="@+id/LinearLayout01"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/form_item_gap"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
 
@@ -150,7 +149,7 @@
                 android:id="@+id/locationText_float"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/form_item_gap"
+
                 android:layout_below="@+id/radioGroup"
                 android:layout_centerHorizontal="true">
                 <EditText
@@ -165,13 +164,20 @@
                 android:layout_width="match_parent"
                 android:id="@+id/date"
                 android:layout_below="@+id/locationText_float"
+                android:layout_marginTop="@dimen/form_item_gap"
                 android:layout_height="wrap_content">
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/dateText_float"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                 <EditText
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/in_date"
                     android:layout_marginTop="@dimen/form_item_gap"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:hint="Date"/>
+                </android.support.design.widget.TextInputLayout>
 
 
                 <Button
@@ -184,15 +190,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/form_item_gap"
                 android:layout_below="@+id/date"
                 android:id="@+id/time">
-
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/timeText_float"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                 <EditText
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/in_time"
                     android:layout_marginTop="@dimen/form_item_gap"
-                    android:layout_weight="2" />
+                    android:layout_weight="2"
+                    android:hint="Time"/>
+                </android.support.design.widget.TextInputLayout>
 
                 <Button
                     android:layout_width="wrap_content"

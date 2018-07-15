@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="devops.colby.cheqit.DataActivity"
     >
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:layout_alignParentBottom="true">
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground"
+            android:layout_gravity="bottom"
+            app:menu="@menu/navigation" />
+
+    </LinearLayout>
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@id/buttons"
+    >
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         tools:context="devops.colby.cheqit.DataActivity">
         <TextView
             android:id="@+id/data_title"
@@ -22,6 +47,7 @@
             android:background="@color/colorPrimary"
             android:layout_centerHorizontal="true"
             android:textAlignment="center" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -220,3 +246,4 @@
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>
