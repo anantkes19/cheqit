@@ -71,7 +71,7 @@ public class AccountAddActivity extends AppCompatActivity {
 
                 //End current activity
                 Toast.makeText(getApplicationContext(), "Account Added", Toast.LENGTH_LONG).show();
-                Intent detailIntent = new Intent(context, TransactionAddActivity.class);
+                Intent detailIntent = new Intent(context, MainScreen.class);
                 detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(detailIntent);
             }

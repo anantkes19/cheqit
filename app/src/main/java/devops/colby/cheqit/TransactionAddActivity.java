@@ -183,7 +183,7 @@ public class TransactionAddActivity extends AppCompatActivity implements GoogleA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        bottomNavControl bottomNav = new bottomNavControl(context, this, 0);
+        bottomNavControl bottomNav = new bottomNavControl(context, this, 1);
         bottomNav.bottomMenu();
 
         mGoogleApiClient = new GoogleApiClient.Builder(context)

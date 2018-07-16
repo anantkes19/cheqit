@@ -5,18 +5,95 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".MainScreen">
 
     <TextView
-        android:id="@+id/app_id"
-        android:layout_width="wrap_content"
+        android:id="@+id/titleText"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="40dp"
-        android:textSize="44sp"
-        android:textColor="@color/colorPrimary"
-        android:text="@string/app_name"/>
+        android:textColor="@android:color/primary_text_dark"
+        android:background="@color/colorPrimary"
+        android:paddingBottom="@dimen/header_bottom"
+        android:paddingTop="@dimen/header_top"
+        android:textSize="@dimen/header_font"
+        android:textAlignment="center"
+        android:text="@string/app_name" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleText"
+        android:layout_above="@+id/navigation"
+
+        android:background="@drawable/round">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/overviewAccountTrans"
+            android:layout_marginTop="@dimen/form_item_gap">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_centerHorizontal="true"
+                    android:text="Accounts"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="20sp"
+                    android:text="Transactions"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/overviewData"
+            android:layout_below="@id/overviewAccountTrans"
+            android:layout_marginTop="@dimen/form_item_gap">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_centerHorizontal="true"
+                    android:text="Spending"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="20sp"
+                    android:text="Payday"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -25,7 +102,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
+        android:background="@android:color/white"
         app:menu="@menu/navigation" />
 
 </RelativeLayout>
