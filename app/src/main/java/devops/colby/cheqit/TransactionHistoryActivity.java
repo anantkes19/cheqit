@@ -31,73 +31,10 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     Context context = this;
     ArrayList<Transaction> transactionList;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-        = item -> {
-            final Handler handler = new Handler();
-            handler.postDelayed(() -> {
-                switch (item.getItemId()) {
-                    case R.id.navigation_add:
-                        Intent detailIntent = new Intent(context, TransactionAddActivity.class);
-                        detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(detailIntent);
-                        break;
-                    case R.id.navigation_overview:
-                        detailIntent = new Intent(context, MainScreen.class);
-                        detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(detailIntent);
-                        break;
-                    case R.id.navigation_history:
-                        detailIntent = new Intent(context, TransactionHistoryActivity.class);
-                        detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(detailIntent);
-                        break;
-                    case R.id.navigation_data:
-                        detailIntent = new Intent(context, DataActivity.class);
-                        detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        startActivity(detailIntent);
-                        break;
-                }
-            }, 100);
-
-
-
-            return false;
-        };
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(0, 0);
-    }
-
-    protected void bottomMenu() {
-        try {
-            FileInputStream fis = openFileInput("accounts"); //Never used, but if accounts file doesnt exist,
-            //Exception will help fix that
-            JsonHandler<Account> handlerAccount = (JsonHandler) getApplication();
-            final ArrayList<Account> accountList = handlerAccount.getJSONObjects("accounts", Account.class);
-            if (accountList.size() == 0) {
-                Toast.makeText(this, "Please create an account", Toast.LENGTH_LONG).show();
-                Intent detailIntent = new Intent(context, AccountAddActivity.class);
-                detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(detailIntent);
-            }
-
-        } catch (FileNotFoundException e) {
-            Toast.makeText(this, "Please create an account", Toast.LENGTH_LONG).show();
-            Intent detailIntent = new Intent(context, AccountAddActivity.class);
-            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(detailIntent);
-        }
-
-
-
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Menu menu = navigation.getMenu();
-        MenuItem menuItem = menu.getItem(2);
-        menuItem.setChecked(true);
     }
 
 
@@ -199,7 +136,8 @@ public class TransactionHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        bottomMenu();
+        bottomNavControl bottomNav = new bottomNavControl(context, this, 2);
+        bottomNav.bottomMenu();
 
         loadHistory("");
     }
